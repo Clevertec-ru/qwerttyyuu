@@ -7,6 +7,15 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* colors, backgrounds */
+  --rhombus-main-color: #4a55f7;
+  --triangle-main-color: #d48a01;
+  --rectangle-main-color: #006a8a;
+  --ellipse-main-color: #fdcb27;
+
+  /* sizes */
+  --outline-width: 10px;
 }
 
 * {

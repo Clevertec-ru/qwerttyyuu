@@ -1,0 +1,19 @@
+.triangle {
+  background-color: var(--rhombus-main-color);
+}
+
+.bottom {
+  clip-path: polygon(100% 0, 0 0, 50% 100%);
+}
+
+.top {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.left {
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.right {
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}

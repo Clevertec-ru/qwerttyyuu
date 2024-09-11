@@ -1,0 +1,8 @@
+.rectangle {
+  background-color: var(--rectangle-main-color);
+}
+
+.outlined {
+  outline: 3px solid var(--rectangle-main-color);
+  outline-offset: 10px;
+}

@@ -1,5 +1,7 @@
 .triangle {
-  background-color: var(--rhombus-main-color);
+  background-color: var(--triangle-main-color);
+  width: 100%;
+  height: 100%;
 }
 
 .bottom {

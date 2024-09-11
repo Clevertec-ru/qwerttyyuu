@@ -11,6 +11,6 @@ export const RhombusNode: FC<PropsWithChildren<RhombusNodeProps>> = ({
   ...stylesProps
 }) => (
   <div className={classnames(styles.rhombus, { [styles.outlined]: outlined })} style={stylesProps}>
-    {outlined ? <div className={styles.inner}>{children}</div> : children}
+    {children}
   </div>
 );

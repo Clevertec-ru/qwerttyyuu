@@ -17,6 +17,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         fitView
         fitViewOptions={fitViewOptions}
         nodeTypes={nodeTypes}
+        draggable
       >
         {children}
       </ReactFlow>

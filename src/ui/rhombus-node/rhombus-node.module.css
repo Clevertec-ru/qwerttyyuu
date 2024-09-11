@@ -2,27 +2,26 @@
   background-color: var(--rhombus-main-color);
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
   margin: auto;
-  width: 250px;
-  height: 250px;
+  width: 100%;
+  height: 100%;
 }
 
 .outlined {
-  aspect-ratio: 1;
   clip-path: polygon(
     50% 0,
-    100% 50%,
-    50% 100%,
     0 50%,
-    50% 0,
-    50%,
-    var(--outline-width) 50%,
-    50% calc(100% - var(--outline-width)),
-    calc(100% - var(--outline-width)) 50%,
-    50% var(--outline-width)
+    var(--small-outline-width) 50%,
+    50% var(--small-outline-width),
+    calc(100% - var(--small-outline-width)) 50%,
+    50% calc(100% - var(--small-outline-width)),
+    var(--small-outline-width) 50%,
+    calc(2 * var(--small-outline-width)) 50%,
+    50% calc(2 * var(--small-outline-width)),
+    calc(100% - 2 * var(--small-outline-width)) 50%,
+    50% calc(100% - 2 * var(--small-outline-width)),
+    calc(2 * var(--small-outline-width)) 50%,
+    0 50%,
+    50% 100%,
+    100% 50%
   );
-}
-
-.outlined .inner {
-  width: calc(100% - 2 * var(--outline-width));
-  height: calc(100% - 2 * var(--outline-width));
 }

@@ -6,7 +6,7 @@ import { RhombusNode } from '../ui/rhombus-node';
 import { TriangleNode } from '../ui/triange-node';
 
 type SwitchedUiComponentProps = {
-  variant: StyleNodeVariants;
+  variant?: StyleNodeVariants;
 };
 
 export const SwitchedUiComponent: FC<PropsWithChildren<SwitchedUiComponentProps>> = ({ variant, children }) => {
@@ -23,6 +23,7 @@ export const SwitchedUiComponent: FC<PropsWithChildren<SwitchedUiComponentProps>
     [NodeUiVariants.Rhombus]: <RhombusNode>{children}</RhombusNode>,
     [NodeUiVariants.RhombusOutlined]: <RhombusNode outlined={true}>{children}</RhombusNode>,
     [NodeUiVariants.Triangle]: <TriangleNode>{children}</TriangleNode>,
+    [NodeUiVariants.TriangleTop]: <TriangleNode orientation='top'>{children}</TriangleNode>,
   };
-  return Component[variant];
+  return variant ? Component[variant] : Component[NodeUiVariants.Rectangle];
 };

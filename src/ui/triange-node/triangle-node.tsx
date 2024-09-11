@@ -13,7 +13,7 @@ export const TriangleNode: FC<PropsWithChildren<TriangleNodeProps>> = ({
   orientation = 'bottom',
   ...stylesProps
 }) => (
-  <div className={classnames(styles.triangle, orientation)} style={stylesProps}>
+  <div className={classnames(styles.triangle, styles[orientation])} style={stylesProps}>
     {children}
   </div>
 );

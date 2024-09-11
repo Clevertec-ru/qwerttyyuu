@@ -1,13 +1,13 @@
 .ellipse {
   background-color: var(--ellipse-main-color);
   border-radius: 50%;
-  height: 100px;
-  width: 150px;
+  width: 100%;
+  height: 100%;
 }
 
 .outlined {
-  outline: 5px solid var(--ellipse-main-color);
-  outline-offset: 10px;
+  outline: calc(var(--small-outline-width) / 2) solid var(--ellipse-main-color);
+  outline-offset: calc(var(--small-outline-width) / 2);
 }
 
 .dashed {

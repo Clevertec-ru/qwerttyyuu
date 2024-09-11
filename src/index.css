@@ -16,6 +16,10 @@
 
   /* sizes */
   --outline-width: 10px;
+
+  /* fonts */
+  --main-font-size: 18px;
+  --main-font-weight: 500;
 }
 
 * {

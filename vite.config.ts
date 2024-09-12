@@ -27,5 +27,4 @@ const vitePWA = VitePWA({
 
 export default defineConfig(() => ({
   plugins: [react(), vitePWA],
-  // base: command === 'build' ? '/Clevertec-ru.github.io/' : '/'
 }));

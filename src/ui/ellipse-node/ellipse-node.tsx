@@ -1,9 +1,10 @@
 import { CSSProperties, FC, PropsWithChildren } from 'react';
-
 import classnames from 'classnames';
+
 import styles from './ellipse-node.module.css';
 
 type EllipseNodeProps = {
+  onDelete?: () => void;
   outlined?: boolean;
   dashed?: boolean;
 } & CSSProperties;
@@ -12,6 +13,7 @@ export const EllipseNode: FC<PropsWithChildren<EllipseNodeProps>> = ({
   children,
   outlined = false,
   dashed = false,
+  onDelete,
   ...stylesProps
 }) => (
   <div
@@ -19,5 +21,9 @@ export const EllipseNode: FC<PropsWithChildren<EllipseNodeProps>> = ({
     style={stylesProps}
   >
     {children}
+
+    <button onClick={onDelete} className={styles.deleteButton}>
+      ✖
+    </button>
   </div>
 );

@@ -26,6 +26,8 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
 
+  const proOptions = { hideAttribution: true };
+
   const onConnect: OnConnect = useCallback(
     (params) => {
       const newEdge = {
@@ -63,7 +65,22 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const onNodeDrag: OnNodeDrag = (_, node) => {
     // console.log('drag event', node.id, node.data);
   };
-  const proOptions = { hideAttribution: true };
+
+  const onDeleteNode = useCallback((id: string) => {
+    setNodes((nds) => nds.filter((node) => node.id !== id));
+  }, []);
+
+  const nodesWithDelete = nodes.map((node) => {
+    return {
+      ...node,
+      data: {
+        ...node.data,
+        onDelete: () => {
+          onDeleteNode(node.id);
+        },
+      },
+    };
+  });
 
   const onEdgeMouseEnter: EdgeMouseHandler = useCallback((_, currentEdge) => {
     setEdges((eds) =>
@@ -99,7 +116,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
-        nodes={nodes}
+        nodes={nodesWithDelete}
         edges={edges}
         edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}

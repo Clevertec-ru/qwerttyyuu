@@ -1,15 +1,20 @@
-import { Background, Controls } from '@xyflow/react';
-import { BaseReactFlow } from './components/base-react-flow';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ReactFlowProvider } from 'reactflow';
+import { CustomNodeFlow } from './components/custome-node-flow/custom-node-flow';
+import { Home } from './components/home/home';
+import { Diagram } from './components/diagram';
 
 function App() {
   return (
-    <>
-      <button>Demo</button>
-      <BaseReactFlow>
-        <Background />
-        <Controls />
-      </BaseReactFlow>
-    </>
+    <ReactFlowProvider>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/demo' element={<CustomNodeFlow />} />
+          <Route path='/diagram' element={<Diagram />} />
+        </Routes>
+      </Router>
+    </ReactFlowProvider>
   );
 }
 

@@ -1,42 +1,46 @@
-import aruiPresetsLint from 'arui-presets-lint/eslint';
+import js from '@eslint/js';
+import importPlugin from 'eslint-plugin-import';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import typescriptParser from '@typescript-eslint/parser';
 
-export default {
-  plugins: ['prettier'],
-  extends: [aruiPresetsLint, 'plugin:react/jsx-runtime', 'plugin:cypress/recommended'],
-  parserOptions: {
-    project: ['./tsconfig.eslint.json'],
-  },
-  overrides: [
-    {
-      files: ['config/**/*.ts', 'src/global-definitions.d.ts', 'src/libs.d.ts'],
-      rules: {
-        'import/no-default-export': 'off',
+export default [
+  js.configs.recommended,
+  {
+    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parser: typescriptParser,
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: {
+        console: 'readonly',
+        document: 'readonly',
+        localStorage: 'readonly',
+        window: 'readonly',
       },
     },
-    {
-      files: ['src/redux/modules/*.ts'],
-      rules: {
-        'no-param-reassign': 'off',
-        'no-return-assign': 'off',
-        'import/no-default-export': 'off',
+    plugins: {
+      import: importPlugin,
+      react,
+      'react-hooks': reactHooks,
+    },
+    rules: {
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          'newlines-between': 'always',
+        },
+      ],
+      'react/react-in-jsx-scope': 'off',
+      'no-console': 'warn',
+      'no-undef': 'off',
+      'no-unused-vars': 'warn',
+    },
+    settings: {
+      react: {
+        version: 'detect',
       },
     },
-  ],
-  rules: {
-    'import/no-extraneous-dependencies': [
-      'error',
-      {
-        devDependencies: ['**/*.test.{ts,tsx,js,jsx}', '**/setup-tests.ts'],
-      },
-    ],
-    'prettier/prettier': 'error',
-    'react/jsx-indent': 'off',
-    'import/no-default-export': 'error',
-    indent: 'off', // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', ignoreRestSiblings: true }],
-    'no-nested-ternary': 'off',
-    'no-unneeded-ternary': 'off',
-    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
   },
-  ignorePatterns: ['coverage', '*.config.[j,t]s', 'mocks/**', 'build'],
-};
+];

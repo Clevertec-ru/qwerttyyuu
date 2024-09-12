@@ -1,0 +1,16 @@
+.node {
+  background-color: var(--white);
+  border-radius: var(--radius);
+}
+
+.selectedNode {
+  border: 2px solid var(--demo-input);
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  border-radius: var(--radius);
+}

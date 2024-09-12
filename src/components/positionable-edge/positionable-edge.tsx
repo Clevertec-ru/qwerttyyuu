@@ -37,6 +37,7 @@ export function PositionableEdge({
   targetPosition,
   style = {},
   markerEnd,
+  markerStart,
   data,
 }: PositionableEdgeProps) {
   const xyFlowInstance = useReactFlow();
@@ -124,10 +125,11 @@ export function PositionableEdge({
           }}
           key={`edge${id}_segment${index}`}
           path={edgePath}
-          markerEnd={markerEnd}
+          markerEnd={hovered ? markerEnd : undefined}
+          markerStart={hovered ? markerStart : undefined}
           style={{
             ...style,
-            stroke: hovered ? '#00f' : '#f00',
+            stroke: hovered ? 'var(--arrow-color)' : '#b1b1b7',
             transition: 'stroke 0.3s ease',
           }}
         />

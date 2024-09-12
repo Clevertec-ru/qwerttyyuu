@@ -3,6 +3,7 @@ import { FC, PropsWithChildren, useCallback, useState } from 'react';
 import {
   addEdge,
   applyNodeChanges,
+  MarkerType,
   Node,
   OnConnect,
   OnNodeDrag,
@@ -35,6 +36,18 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
       data: {
         type: 'default',
         positionHandlers: [],
+      },
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+        width: 30,
+        height: 30,
+        color: 'var(--arrow-color)',
+      },
+      markerStart: {
+        type: MarkerType.ArrowClosed,
+        width: 30,
+        height: 30,
+        color: 'var(--arrow-color)',
       },
     };
     setEdges((eds) => addEdge(newEdge, eds));

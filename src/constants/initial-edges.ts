@@ -1,4 +1,4 @@
-import { Edge } from '@xyflow/react';
+import { Edge, MarkerType } from '@xyflow/react';
 import { CSSProperties } from 'react';
 
 const defaultLabelStyles: CSSProperties = { fontSize: 14, padding: 5 };
@@ -14,6 +14,18 @@ export const initialEdges: Edge[] = [
       type: 'straight',
       positionHandlers: [],
     },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
   },
   {
     id: 'el1-11',
@@ -24,6 +36,18 @@ export const initialEdges: Edge[] = [
     data: {
       type: 'default',
       positionHandlers: [],
+    },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
     },
   },
   {
@@ -36,6 +60,18 @@ export const initialEdges: Edge[] = [
       type: 'default',
       positionHandlers: [],
     },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
   },
   {
     id: 'el1-13',
@@ -46,6 +82,18 @@ export const initialEdges: Edge[] = [
     data: {
       type: 'default',
       positionHandlers: [],
+    },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
     },
   },
   {
@@ -60,6 +108,18 @@ export const initialEdges: Edge[] = [
       type: 'default',
       positionHandlers: [],
     },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
   },
   {
     id: 'el2-3',
@@ -69,6 +129,18 @@ export const initialEdges: Edge[] = [
     data: {
       type: 'default',
       positionHandlers: [],
+    },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
     },
   },
   {
@@ -82,6 +154,18 @@ export const initialEdges: Edge[] = [
       type: 'default',
       positionHandlers: [],
     },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
   },
   {
     id: 'e4-5',
@@ -94,6 +178,18 @@ export const initialEdges: Edge[] = [
       type: 'default',
       positionHandlers: [],
     },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
   },
   {
     id: 'e5-6',
@@ -103,6 +199,18 @@ export const initialEdges: Edge[] = [
     data: {
       type: 'default',
       positionHandlers: [],
+    },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
     },
   },
   {
@@ -116,6 +224,18 @@ export const initialEdges: Edge[] = [
       type: 'default',
       positionHandlers: [],
     },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
   },
   {
     id: 'el8-9',
@@ -127,6 +247,18 @@ export const initialEdges: Edge[] = [
       type: 'default',
       positionHandlers: [],
     },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
   },
   {
     id: 'el8-10',
@@ -137,6 +269,18 @@ export const initialEdges: Edge[] = [
     data: {
       type: 'default',
       positionHandlers: [],
+    },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      width: 30,
+      height: 30,
+      color: 'var(--arrow-color)',
     },
   },
 ];

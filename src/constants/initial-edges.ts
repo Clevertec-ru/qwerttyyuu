@@ -3,6 +3,8 @@ import { CSSProperties } from 'react';
 
 import { CustomEdgeVariants, EdgeDataPositionable, EdgeDataType } from '../types/edge-variants';
 
+import { defaultMarkerStyles } from './default-marker-styles';
+
 const defaultLabelStyles: CSSProperties = { fontSize: 14, padding: 5 };
 
 export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] = [
@@ -11,7 +13,8 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     source: '1',
     sourceHandle: 'bottom0',
     target: '2',
-    type: CustomEdgeVariants.Positionable,
+    type: CustomEdgeVariants.Marked,
+    ...defaultMarkerStyles,
     data: {
       type: 'straight',
       positionHandlers: [],
@@ -23,6 +26,7 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     sourceHandle: 'top0',
     target: '11',
     type: CustomEdgeVariants.Positionable,
+    ...defaultMarkerStyles,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -34,6 +38,7 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     sourceHandle: 'top1',
     target: '12',
     type: CustomEdgeVariants.Positionable,
+    ...defaultMarkerStyles,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -45,6 +50,7 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     sourceHandle: 'top2',
     target: '13',
     type: CustomEdgeVariants.Positionable,
+    ...defaultMarkerStyles,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -58,6 +64,7 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     labelStyle: defaultLabelStyles,
     label: '1',
     type: CustomEdgeVariants.Positionable,
+    ...defaultMarkerStyles,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -68,6 +75,7 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     source: '2',
     target: '3',
     type: CustomEdgeVariants.Positionable,
+    ...defaultMarkerStyles,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -80,6 +88,7 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     label: '0..1',
     labelStyle: defaultLabelStyles,
     type: CustomEdgeVariants.Positionable,
+    ...defaultMarkerStyles,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -92,6 +101,7 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     label: '1..1',
     labelStyle: defaultLabelStyles,
     type: CustomEdgeVariants.Positionable,
+    ...defaultMarkerStyles,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -102,6 +112,7 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     source: '5',
     target: '6',
     type: CustomEdgeVariants.Positionable,
+    ...defaultMarkerStyles,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -114,6 +125,7 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     label: 'N',
     labelStyle: defaultLabelStyles,
     type: CustomEdgeVariants.Positionable,
+    ...defaultMarkerStyles,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -125,6 +137,7 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     target: '9',
     sourceHandle: 'top0',
     type: CustomEdgeVariants.Positionable,
+    ...defaultMarkerStyles,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -136,6 +149,7 @@ export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] =
     target: '10',
     sourceHandle: 'top1',
     type: CustomEdgeVariants.Positionable,
+    ...defaultMarkerStyles,
     data: {
       type: 'default',
       positionHandlers: [],

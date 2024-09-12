@@ -14,7 +14,7 @@ export enum CustomEdgeVariants {
 
 export type MarkersVariants = `${EdgeMarkersVariants}`;
 
-export type EdgeDataType = { markerType: `${EdgeMarkersVariants}` };
+export type EdgeDataType = { markerType: `${EdgeMarkersVariants}`; isHovered?: boolean };
 
 export type PositionHandler = {
   x: number;
@@ -25,6 +25,7 @@ export type PositionHandler = {
 export type EdgeDataPositionable = {
   type: string;
   positionHandlers: PositionHandler[];
+  isHovered?: boolean;
 };
 
 export type CustomEdge = Edge<EdgeDataType, CustomEdgeVariants.Marked>;

@@ -1,7 +1,8 @@
 import { getStraightPath, BaseEdge, type EdgeProps } from '@xyflow/react';
 
+import { CustomEdge } from '../../types/edge-variants';
+
 import styles from './hover-arrows-edge.module.css';
-import { CustomEdge } from '../../../types/edge-variants';
 
 export const HoverArrowsEdge = ({
   id,
@@ -12,6 +13,7 @@ export const HoverArrowsEdge = ({
   markerStart,
   markerEnd,
   style = {},
+  data,
 }: EdgeProps<CustomEdge>) => {
   const [edgePath] = getStraightPath({ sourceX, sourceY, targetX, targetY });
 
@@ -23,8 +25,8 @@ export const HoverArrowsEdge = ({
         id={id}
         path={edgePath}
         style={style}
-        markerEnd={markerEnd}
-        markerStart={markerStart}
+        markerEnd={data?.isHovered ? markerEnd : undefined}
+        markerStart={data?.isHovered ? markerStart : undefined}
       />
     </>
   );

@@ -9,7 +9,9 @@ import {
   OnConnect,
   OnNodeDrag,
   OnNodesChange,
+  OnReconnect,
   ReactFlow,
+  reconnectEdge,
 } from '@xyflow/react';
 
 import { initialNodes } from '../../constants/initial-nodes';
@@ -17,10 +19,8 @@ import { defaultEdgeOptions } from '../../constants/default-edges-options';
 import { fitViewOptions } from '../../constants/fit-view-options';
 import { nodeTypes } from '../../constants/node-types';
 import { edgeTypes } from '../../constants/edge-types';
-import { CustomEdgeVariants } from '../../types/edge-variants';
-import { baseMarkerStyles } from '../../constants/base-edges-styles';
-import { hoverEdgeStyles, defaultEdgeStyles } from '../../constants/edge-styles';
 import { initialEdges } from '../../constants/initial-edges';
+import { defaultMarkerStyles } from '../../constants/default-marker-styles';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
@@ -32,23 +32,15 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
     (params) => {
       const newEdge = {
         ...params,
-        type: CustomEdgeVariants.Positionable,
+        ...defaultMarkerStyles,
         data: {
           type: 'default',
           positionHandlers: [],
+          isHovered: false,
         },
       };
 
-      setEdges((eds) => {
-        const edgesTransformed = eds.map((elem) => {
-          if (elem.type === CustomEdgeVariants.Marked) {
-            const { markerEnd, markerStart, ...restElem } = elem;
-            return restElem;
-          }
-          return elem;
-        });
-        return addEdge(newEdge, edgesTransformed);
-      });
+      setEdges((eds) => addEdge(newEdge, eds));
     },
     [setEdges]
   );
@@ -70,6 +62,11 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
     setNodes((nds) => nds.filter((node) => node.id !== id));
   }, []);
 
+  const onReconnect: OnReconnect = useCallback(
+    (oldEdge, newConnection) => setEdges((eds) => reconnectEdge(oldEdge, newConnection, eds)),
+    []
+  );
+
   const nodesWithDelete = nodes.map((node) => {
     return {
       ...node,
@@ -87,11 +84,10 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
       eds.map((elem) => {
         if (elem.id !== currentEdge.id) return elem;
 
-        const prevStyles = elem.style;
+        const prevData = elem.data;
         return {
           ...elem,
-          ...baseMarkerStyles,
-          style: prevStyles ? { ...prevStyles, ...hoverEdgeStyles } : hoverEdgeStyles,
+          data: prevData ? { ...prevData, isHovered: true } : { isHovered: true },
         };
       })
     );
@@ -102,12 +98,10 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
       eds.map((elem) => {
         if (elem.id !== currentEdge.id) return elem;
 
-        const prevStyles = elem.style;
+        const prevData = elem.data;
         return {
           ...elem,
-          markerStart: undefined,
-          markerEnd: undefined,
-          style: prevStyles ? { ...prevStyles, ...defaultEdgeStyles } : defaultEdgeStyles,
+          data: prevData ? { ...prevData, isHovered: false } : { isHovered: false },
         };
       })
     );
@@ -124,10 +118,11 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         fitViewOptions={fitViewOptions}
         nodeTypes={nodeTypes}
         onConnect={onConnect}
+        onReconnect={onReconnect}
         onNodeDrag={onNodeDrag}
         onNodesChange={onNodesChange}
-        onEdgeMouseEnter={onEdgeMouseEnter}
         onEdgeMouseLeave={onEdgeMouseLeave}
+        onEdgeMouseEnter={onEdgeMouseEnter}
         proOptions={proOptions}
       >
         {children}

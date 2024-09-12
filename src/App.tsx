@@ -1,19 +1,20 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { ReactFlowProvider } from 'reactflow';
-import { CustomNodeFlow } from './components/custome-node-flow/custom-node-flow';
-import { Home } from './components/home/home';
+import { ReactFlowProvider } from '@xyflow/react';
+import { useState } from 'react';
+
+import styles from './App.module.css';
 import { Diagram } from './components/diagram';
 
 function App() {
+  const [isDiagramVisible, setIsDiagramVisible] = useState(true);
+
+  const toggleDiagram = () => setIsDiagramVisible((prev) => !prev);
+
   return (
     <ReactFlowProvider>
-      <Router>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/demo' element={<CustomNodeFlow />} />
-          <Route path='/diagram' element={<Diagram />} />
-        </Routes>
-      </Router>
+      <button className={styles.demoButton} onClick={toggleDiagram}>
+        {isDiagramVisible ? 'Hide Diagram' : 'Show Diagram'}
+      </button>
+      {isDiagramVisible && <Diagram />}
     </ReactFlowProvider>
   );
 }

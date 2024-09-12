@@ -1,4 +1,5 @@
 import { Node, Position } from '@xyflow/react';
+
 import { CustomNodesVariants, HandleVariants, UpdatedNodeData } from '../types/custom-nodes-variants';
 import { NodeUiVariants } from '../types/node-ui-variants';
 

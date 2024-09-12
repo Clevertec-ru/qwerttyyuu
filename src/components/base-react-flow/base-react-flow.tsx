@@ -1,39 +1,43 @@
+import '@xyflow/react/dist/style.css';
+import { FC, PropsWithChildren, useCallback, useState } from 'react';
 import {
   addEdge,
-  applyEdgeChanges,
   applyNodeChanges,
   Edge,
   EdgeMouseHandler,
   Node,
   OnConnect,
-  OnEdgesChange,
   OnNodeDrag,
   OnNodesChange,
   ReactFlow,
 } from '@xyflow/react';
-
-import '@xyflow/react/dist/style.css';
-import { FC, PropsWithChildren, useCallback, useState } from 'react';
 
 import { initialNodes } from '../../constants/initial-nodes';
 import { defaultEdgeOptions } from '../../constants/default-edges-options';
 import { fitViewOptions } from '../../constants/fit-view-options';
 import { nodeTypes } from '../../constants/node-types';
 import { edgeTypes } from '../../constants/edge-types';
-import { getInitialEdges } from '../../helpers/get-initial-edges';
 import { CustomEdgeVariants } from '../../types/edge-variants';
-import { baseEdgesStyles, baseMarkerStyles } from '../../constants/base-edges-styles';
+import { baseMarkerStyles } from '../../constants/base-edges-styles';
 import { hoverEdgeStyles, defaultEdgeStyles } from '../../constants/edge-styles';
+import { initialEdges } from '../../constants/initial-edges';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
-  const [edges, setEdges] = useState<Edge[]>(() => getInitialEdges());
+  const [edges, setEdges] = useState<Edge[]>(initialEdges);
 
   const onConnect: OnConnect = useCallback(
-    (connection) =>
+    (params) => {
+      const newEdge = {
+        ...params,
+        type: CustomEdgeVariants.Positionable,
+        data: {
+          type: 'default',
+          positionHandlers: [],
+        },
+      };
+
       setEdges((eds) => {
-        console.log('CONNECTION', connection);
-        // console.log('EDGES', eds);
         const edgesTransformed = eds.map((elem) => {
           if (elem.type === CustomEdgeVariants.Marked) {
             const { markerEnd, markerStart, ...restElem } = elem;
@@ -41,8 +45,9 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
           }
           return elem;
         });
-        return addEdge(connection, edgesTransformed);
-      }),
+        return addEdge(newEdge, edgesTransformed);
+      });
+    },
     [setEdges]
   );
 
@@ -55,18 +60,10 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
     [setNodes]
   );
 
-  const onEdgesChange: OnEdgesChange = useCallback(
-    (changes) =>
-      setEdges((eds) => {
-        // console.log(eds, 'EDGES CHANGE EVENT');
-        return applyEdgeChanges(changes, eds);
-      }),
-    [setEdges]
-  );
-
   const onNodeDrag: OnNodeDrag = (_, node) => {
     // console.log('drag event', node.id, node.data);
   };
+  const proOptions = { hideAttribution: true };
 
   const onEdgeMouseEnter: EdgeMouseHandler = useCallback((_, currentEdge) => {
     setEdges((eds) =>
@@ -104,18 +101,17 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
         fitView
         fitViewOptions={fitViewOptions}
         nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes}
         onConnect={onConnect}
         onNodeDrag={onNodeDrag}
         onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
         onEdgeMouseEnter={onEdgeMouseEnter}
         onEdgeMouseLeave={onEdgeMouseLeave}
-        draggable
+        proOptions={proOptions}
       >
         {children}
       </ReactFlow>

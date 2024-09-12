@@ -9,12 +9,26 @@ export enum EdgeMarkersVariants {
 
 export enum CustomEdgeVariants {
   Marked = 'customMarked',
+  Positionable = 'positionable',
 }
 
 export type MarkersVariants = `${EdgeMarkersVariants}`;
 
 export type EdgeDataType = { markerType: `${EdgeMarkersVariants}` };
 
+export type PositionHandler = {
+  x: number;
+  y: number;
+  active: number | undefined;
+};
+
+export type EdgeDataPositionable = {
+  type: string;
+  positionHandlers: PositionHandler[];
+};
+
 export type CustomEdge = Edge<EdgeDataType, CustomEdgeVariants.Marked>;
+
+export type PositionableEdgeType = Edge<EdgeDataPositionable, CustomEdgeVariants.Positionable>;
 
 export type AppEdgeType = BuiltInEdge | CustomEdge;

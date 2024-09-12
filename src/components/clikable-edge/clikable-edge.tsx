@@ -1,7 +1,10 @@
 import { BaseEdgeProps } from '@xyflow/react';
+import './clikable-edge.css';
 
 type ClickableEdgeProps = {
   onClick: (event: React.MouseEvent<SVGPathElement>) => void;
+  onMouseEnter?: (event: React.MouseEvent<SVGPathElement>) => void;
+  onMouseLeave?: (event: React.MouseEvent<SVGPathElement>) => void;
 };
 const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
   id,
@@ -10,6 +13,8 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
   markerEnd,
   markerStart,
   interactionWidth = 20,
+  onMouseEnter,
+  onMouseLeave,
   onClick,
 }) => {
   return (
@@ -22,6 +27,8 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
         className='react-flow__edge-path'
         markerEnd={markerEnd}
         markerStart={markerStart}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       />
       {interactionWidth && (
         <path
@@ -31,6 +38,8 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
           strokeWidth={interactionWidth}
           className='react-flow__edge-interaction'
           onClick={onClick}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
         />
       )}
     </>

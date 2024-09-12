@@ -4,10 +4,12 @@ import { Handle, NodeProps, Position } from '@xyflow/react';
 import { isTextNodeData } from '../../helpers/is-text-node-data';
 import { UpdatedNodeType } from '../../types/custom-nodes-variants';
 import { SwitchedUiComponent } from '../../hoc/switched-ui-component';
+import { DeleteNodeButton } from '../delete-node-button';
+import { getDeleteButtonPosition } from '../../helpers/get-delete-button-position';
 
 import styles from './multiple-updated-node.module.css';
 
-export const MultipleUpdatedNode = ({ data }: NodeProps<UpdatedNodeType>) => {
+export const MultipleUpdatedNode = ({ data, id }: NodeProps<UpdatedNodeType>) => {
   if (!data.multipleHandles) return null;
 
   const [value, setValue] = useState(() => (isTextNodeData(data) ? data.text : data.number));
@@ -26,6 +28,8 @@ export const MultipleUpdatedNode = ({ data }: NodeProps<UpdatedNodeType>) => {
     rightHandleType,
     topHandleType,
   } = data.multipleHandles;
+
+  const stylesDeleteBtn = getDeleteButtonPosition(data.wrapperStyle);
 
   const topHandlesArr = Array.from({ length: topHandles || 0 });
   const leftHandlesArr = Array.from({ length: leftHandles || 0 });
@@ -54,7 +58,7 @@ export const MultipleUpdatedNode = ({ data }: NodeProps<UpdatedNodeType>) => {
             style={{ top: leftHandlesArr.length === 1 ? undefined : index * 10 }}
           />
         ))}
-      <SwitchedUiComponent variant={data.wrapperStyle} onDelete={data.onDelete}>
+      <SwitchedUiComponent variant={data.wrapperStyle}>
         <label className={styles.label}>
           <input
             className={styles.input}
@@ -63,6 +67,7 @@ export const MultipleUpdatedNode = ({ data }: NodeProps<UpdatedNodeType>) => {
             onChange={onValueChange}
           />
         </label>
+        <DeleteNodeButton id={id} {...stylesDeleteBtn} />
       </SwitchedUiComponent>
       {Boolean(rightHandles) &&
         rightHandlesArr.map((_, index) => (

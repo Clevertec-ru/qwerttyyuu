@@ -1,0 +1,22 @@
+.deleteButton {
+  border-radius: 50%;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: -14px;
+  right: 5px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.deleteButton:hover .image {
+  transform: scale(1.03) rotate(90deg);
+  transition: transform ease 0.2s;
+}
+
+.image {
+  width: 20px;
+  height: 20px;
+}

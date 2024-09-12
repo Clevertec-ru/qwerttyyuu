@@ -58,26 +58,10 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
     // console.log('drag event', node.id, node.data);
   };
 
-  const onDeleteNode = useCallback((id: string) => {
-    setNodes((nds) => nds.filter((node) => node.id !== id));
-  }, []);
-
   const onReconnect: OnReconnect = useCallback(
     (oldEdge, newConnection) => setEdges((eds) => reconnectEdge(oldEdge, newConnection, eds)),
     []
   );
-
-  const nodesWithDelete = nodes.map((node) => {
-    return {
-      ...node,
-      data: {
-        ...node.data,
-        onDelete: () => {
-          onDeleteNode(node.id);
-        },
-      },
-    };
-  });
 
   const onEdgeMouseEnter: EdgeMouseHandler = useCallback((_, currentEdge) => {
     setEdges((eds) =>
@@ -110,7 +94,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
-        nodes={nodesWithDelete}
+        nodes={nodes}
         edges={edges}
         edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}

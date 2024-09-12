@@ -1,9 +1,10 @@
 import { BaseEdgeProps } from '@xyflow/react';
+import { MouseEvent } from 'react';
 
 type ClickableEdgeProps = {
-  onClick: (event: React.MouseEvent<SVGPathElement>) => void;
+  onClick: (event: MouseEvent<SVGPathElement>) => void;
 };
-const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
+export const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
   id,
   path,
   style,
@@ -36,7 +37,3 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
     </>
   );
 };
-
-ClickableEdge.displayName = 'BaseEdge';
-
-export default ClickableEdge;

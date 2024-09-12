@@ -1,15 +1,17 @@
 import { Edge } from '@xyflow/react';
 import { CSSProperties } from 'react';
 
+import { CustomEdgeVariants, EdgeDataPositionable, EdgeDataType } from '../types/edge-variants';
+
 const defaultLabelStyles: CSSProperties = { fontSize: 14, padding: 5 };
 
-export const initialEdges: Edge[] = [
+export const initialEdges: Edge<EdgeDataType | EdgeDataPositionable, string>[] = [
   {
     id: 'el1-2',
     source: '1',
     sourceHandle: 'bottom0',
     target: '2',
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'straight',
       positionHandlers: [],
@@ -20,7 +22,7 @@ export const initialEdges: Edge[] = [
     source: '1',
     sourceHandle: 'top0',
     target: '11',
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -31,7 +33,7 @@ export const initialEdges: Edge[] = [
     source: '1',
     sourceHandle: 'top1',
     target: '12',
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -42,7 +44,7 @@ export const initialEdges: Edge[] = [
     source: '1',
     sourceHandle: 'top2',
     target: '13',
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -55,7 +57,7 @@ export const initialEdges: Edge[] = [
     target: '7',
     labelStyle: defaultLabelStyles,
     label: '1',
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -65,7 +67,7 @@ export const initialEdges: Edge[] = [
     id: 'el2-3',
     source: '2',
     target: '3',
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -77,7 +79,7 @@ export const initialEdges: Edge[] = [
     target: '4',
     label: '0..1',
     labelStyle: defaultLabelStyles,
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -89,7 +91,7 @@ export const initialEdges: Edge[] = [
     target: '5',
     label: '1..1',
     labelStyle: defaultLabelStyles,
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -99,7 +101,7 @@ export const initialEdges: Edge[] = [
     id: 'e5-6',
     source: '5',
     target: '6',
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -111,7 +113,7 @@ export const initialEdges: Edge[] = [
     target: '8',
     label: 'N',
     labelStyle: defaultLabelStyles,
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -122,7 +124,7 @@ export const initialEdges: Edge[] = [
     source: '8',
     target: '9',
     sourceHandle: 'top0',
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'default',
       positionHandlers: [],
@@ -133,7 +135,7 @@ export const initialEdges: Edge[] = [
     source: '8',
     target: '10',
     sourceHandle: 'top1',
-    type: 'positionableedge',
+    type: CustomEdgeVariants.Positionable,
     data: {
       type: 'default',
       positionHandlers: [],

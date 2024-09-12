@@ -6,6 +6,10 @@
   height: 100%;
 }
 
+.rhombus.outlined {
+  background-color: var(--rhombus-ellipsis-main-color);
+}
+
 .outlined {
   clip-path: polygon(
     50% 0,

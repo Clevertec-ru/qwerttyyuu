@@ -21,7 +21,7 @@ export const UpdatedNode = ({ data, sourcePosition, targetPosition }: NodeProps<
   return (
     <>
       {(!data.handleTypes || targetMode) && <Handle type='target' position={targetPosition ?? Position.Top} />}
-      <SwitchedUiComponent variant={data.wrapperStyle}>
+      <SwitchedUiComponent variant={data.wrapperStyle} onDelete={data.onDelete}>
         <label className={styles.label}>
           <input
             className={styles.input}

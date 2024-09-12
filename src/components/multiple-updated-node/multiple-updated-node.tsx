@@ -1,8 +1,10 @@
 import { ChangeEventHandler, useState } from 'react';
+import { Handle, NodeProps, Position } from '@xyflow/react';
+
 import { isTextNodeData } from '../../helpers/is-text-node-data';
 import { UpdatedNodeType } from '../../types/custom-nodes-variants';
-import { Handle, NodeProps, Position } from '@xyflow/react';
 import { SwitchedUiComponent } from '../../hoc/switched-ui-component';
+
 import styles from './multiple-updated-node.module.css';
 
 export const MultipleUpdatedNode = ({ data }: NodeProps<UpdatedNodeType>) => {
@@ -52,7 +54,7 @@ export const MultipleUpdatedNode = ({ data }: NodeProps<UpdatedNodeType>) => {
             style={{ top: leftHandlesArr.length === 1 ? undefined : index * 10 }}
           />
         ))}
-      <SwitchedUiComponent variant={data.wrapperStyle}>
+      <SwitchedUiComponent variant={data.wrapperStyle} onDelete={data.onDelete}>
         <label className={styles.label}>
           <input
             className={styles.input}

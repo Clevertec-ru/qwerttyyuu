@@ -1,7 +1,8 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { ReactFlowProvider } from 'reactflow';
-import { CustomNodeFlow } from './components/custome-node-flow/custom-node-flow';
-import { Home } from './components/home/home';
+
+import { CustomNodeFlow } from './components/custome-node-flow';
+import { Home } from './components/home';
 import { Diagram } from './components/diagram';
 
 function App() {

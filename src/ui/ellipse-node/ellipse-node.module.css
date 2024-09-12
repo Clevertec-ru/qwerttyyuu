@@ -1,0 +1,15 @@
+.ellipse {
+  background-color: var(--ellipse-main-color);
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.outlined {
+  outline: calc(var(--small-outline-width) / 2) solid var(--ellipse-main-color);
+  outline-offset: calc(var(--small-outline-width) / 2);
+}
+
+.dashed {
+  outline-style: dotted;
+}

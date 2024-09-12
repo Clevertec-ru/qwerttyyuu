@@ -1,38 +1,32 @@
+import '@xyflow/react/dist/style.css';
+import { FC, PropsWithChildren, useCallback, useState } from 'react';
 import {
   addEdge,
-  applyEdgeChanges,
   applyNodeChanges,
-  Edge,
   Node,
   OnConnect,
-  OnEdgesChange,
   OnNodeDrag,
   OnNodesChange,
   ReactFlow,
+  useEdgesState,
 } from '@xyflow/react';
-
-import '@xyflow/react/dist/style.css';
-import { FC, PropsWithChildren, useCallback, useState } from 'react';
 
 import { initialEdges } from '../../constants/initial-edges';
 import { initialNodes } from '../../constants/initial-nodes';
 import { defaultEdgeOptions } from '../../constants/default-edges-options';
 import { fitViewOptions } from '../../constants/fit-view-options';
 import { nodeTypes } from '../../constants/node-types';
+import { PositionableEdge } from '../positionable-edge/positionable-edge';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
-  const [edges, setEdges] = useState<Edge[]>(initialEdges);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  const onConnect: OnConnect = useCallback(
-    (connection) =>
-      setEdges((eds) => {
-        // console.log('CONNECTION', connection);
-        // console.log('EDGES', eds);
-        return addEdge(connection, eds);
-      }),
-    [setEdges]
-  );
+  const edgeTypes = {
+    positionableedge: PositionableEdge,
+  };
+
+  const onConnect: OnConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
@@ -43,24 +37,17 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
     [setNodes]
   );
 
-  const onEdgesChange: OnEdgesChange = useCallback(
-    (changes) =>
-      setEdges((eds) => {
-        // console.log(eds, 'EDGES CHANGE EVENT');
-        return applyEdgeChanges(changes, eds);
-      }),
-    [setEdges]
-  );
-
   const onNodeDrag: OnNodeDrag = (_, node) => {
     // console.log('drag event', node.id, node.data);
   };
+  const proOptions = { hideAttribution: true };
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
         fitView
         fitViewOptions={fitViewOptions}
@@ -69,7 +56,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         onNodeDrag={onNodeDrag}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        draggable
+        proOptions={proOptions}
       >
         {children}
       </ReactFlow>

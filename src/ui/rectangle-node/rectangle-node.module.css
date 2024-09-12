@@ -1,0 +1,10 @@
+.rectangle {
+  background-color: var(--rectangle-main-color);
+  width: 100%;
+  height: 100%;
+}
+
+.outlined {
+  outline: calc(var(--small-outline-width) / 2) solid var(--rectangle-main-color);
+  outline-offset: calc(var(--small-outline-width) / 2);
+}

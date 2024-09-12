@@ -29,7 +29,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   /* colors, backgrounds */
-  --rhombus-main-color: #4a55f7;
+  --rhombus-main-color: #8331ff;
+  --rhombus-ellipsis-main-color: #6b8dff;
   --triangle-main-color: #d48a01;
   --rectangle-main-color: #006a8a;
   --ellipse-main-color: #fdcb27;

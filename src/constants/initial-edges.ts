@@ -1,14 +1,28 @@
-import { Edge } from '@xyflow/react';
+import { Edge, MarkerType } from '@xyflow/react';
 import { CSSProperties } from 'react';
+
+import { CustomEdgeVariants, EdgeDataType, EdgeMarkersVariants } from '../types/edge-variants';
+
+import { defaultMarkerStyles } from './default-marker-styles';
 
 const defaultLabelStyles: CSSProperties = { fontSize: 14, padding: 5 };
 
-export const initialEdges: Edge[] = [
+export const initialEdges: Edge<EdgeDataType, string>[] = [
   {
     id: 'el1-2',
     source: '1',
     sourceHandle: 'bottom0',
     target: '2',
+    type: CustomEdgeVariants.Marked,
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      ...defaultMarkerStyles,
+    },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      ...defaultMarkerStyles,
+    },
+    data: { markerType: EdgeMarkersVariants.BothMarked },
   },
   {
     id: 'el1-11',

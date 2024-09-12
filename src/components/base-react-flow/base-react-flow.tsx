@@ -26,7 +26,17 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
     positionableedge: PositionableEdge,
   };
 
-  const onConnect: OnConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
+  const onConnect: OnConnect = useCallback((params) => {
+    const newEdge = {
+      ...params,
+      type: 'positionableedge',
+      data: {
+        type: 'default',
+        positionHandlers: [],
+      },
+    };
+    setEdges((eds) => addEdge(newEdge, eds));
+  }, []);
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>

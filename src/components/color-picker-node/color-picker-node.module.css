@@ -1,0 +1,14 @@
+.handle {
+  background-color: var(--white);
+}
+
+.handleTop {
+  top: 10;
+  background-color: var(--white);
+}
+
+.handleBottom {
+  top: auto;
+  bottom: 10;
+  background-color: var(--white);
+}

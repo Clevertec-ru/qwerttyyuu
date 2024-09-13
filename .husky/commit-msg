@@ -1,7 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-commit_regex="^(init|fix|feat|docs|refactor): .+"
+commit_regex="^(init|fix|feat|docs|refactor)"
 if ! [[ "$1" =~ $commit_regex ]]; then
   echo "Error: Commit message does not match the required format."
   echo "Please use the format: 'type: description'"

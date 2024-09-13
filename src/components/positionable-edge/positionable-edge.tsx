@@ -11,11 +11,11 @@ import ClickableEdge from '../clikable-edge/clikable-edge';
 import './positionable-edge.css';
 import {
   handleContextMenu,
-  handleLongPress,
   handleMouseDown,
   handleMouseMove,
   handleMouseUp,
   handleTouchMove,
+  handleTouchStart,
 } from '../../helpers/positionable-edge-handlers';
 
 type PositionHandler = {
@@ -153,10 +153,9 @@ export function PositionableEdge({
                 className='positionHandler'
                 data-active={active ?? -1}
                 onMouseDown={() => handleMouseDown(handlerIndex, xyFlowInstance, id)}
-                onTouchStart={() => handleMouseDown(handlerIndex, xyFlowInstance, id)}
+                onTouchStart={(event) => handleTouchStart(event, handlerIndex, xyFlowInstance, id)}
                 onContextMenu={(event) => handleContextMenu(event, handlerIndex, xyFlowInstance, id)}
-                onTouchEnd={(event) => handleLongPress(event, id, handlerIndex, xyFlowInstance)}
-              ></button>
+              />
             </div>
           </div>
         </EdgeLabelRenderer>

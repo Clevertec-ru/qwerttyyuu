@@ -5,10 +5,13 @@ import { NodeProps } from '@xyflow/react';
 import { RectangleNode } from '../../ui/rectangle-node';
 import { CustomHandle } from '../custom-handle';
 import resizeIcon from '../../assets/images/resizeIcon.svg';
+import { DeleteNodeButton } from '../delete-node-button';
+import { ResizableNodeType } from '../../types/custom-nodes-variants';
+import { AddNodeButton } from '../add-node-button';
 
 import styles from './resizable-node.module.css';
 
-export const ResizableNodeSelected: FC<NodeProps> = ({ data, selected, id }) => {
+export const ResizableNodeSelected: FC<NodeProps<ResizableNodeType>> = ({ data, selected, id }) => {
   return (
     <>
       {selected && (
@@ -32,6 +35,8 @@ export const ResizableNodeSelected: FC<NodeProps> = ({ data, selected, id }) => 
           style={{ width: '100%', height: '100%', resize: 'none' }}
           placeholder='Resizable Node Example'
         />
+        {data.isHovered && <DeleteNodeButton id={id} right='20%' />}
+        {data.isHovered && <AddNodeButton id={id} right='calc(20% + 30px)' />}
       </RectangleNode>
       <CustomHandle handleProps={{ type: 'source', position: Position.Left }} />
     </>

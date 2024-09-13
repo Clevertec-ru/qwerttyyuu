@@ -7,13 +7,13 @@ export const getAddDeleteButtonPosition = (
 ): { add: CSSProperties; delete: CSSProperties } => {
   switch (uiVariant) {
     case NodeUiVariants.Ellipse: {
-      return { add: { bottom: -8, right: 35 }, delete: { bottom: -8, right: 10 } };
+      return { add: { bottom: -8, right: 15 }, delete: { bottom: -8, right: -7 } };
     }
     case NodeUiVariants.EllipseOutlined: {
-      return { add: { bottom: -10, right: 30 }, delete: { bottom: -10, right: 5 } };
+      return { add: { bottom: -10, right: 15 }, delete: { bottom: -10, right: -7 } };
     }
     case NodeUiVariants.EllipseOutlinedDashed: {
-      return { add: { bottom: -12, right: 30 }, delete: { bottom: -12, right: 5 } };
+      return { add: { bottom: -12, right: 15 }, delete: { bottom: -12, right: -7 } };
     }
     case NodeUiVariants.Rhombus: {
       return { add: { bottom: 14, left: '28%' }, delete: { bottom: 14, right: '28%' } };

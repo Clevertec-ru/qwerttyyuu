@@ -13,7 +13,6 @@ import {
 
 import { initialEdges } from '../../constants/initial-edges';
 import { initialNodes } from '../../constants/initial-nodes';
-import { defaultEdgeOptions } from '../../constants/default-edges-options';
 import { fitViewOptions } from '../../constants/fit-view-options';
 import { nodeTypes } from '../../constants/node-types';
 import { PositionableEdge } from '../positionable-edge/positionable-edge';
@@ -92,7 +91,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         nodes={nodesWithDelete}
         edges={edges}
         edgeTypes={edgeTypes}
-        defaultEdgeOptions={defaultEdgeOptions}
+        // defaultEdgeOptions={defaultEdgeOptions}
         fitView
         fitViewOptions={fitViewOptions}
         nodeTypes={nodeTypes}

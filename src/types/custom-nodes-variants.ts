@@ -9,6 +9,7 @@ export enum CustomNodesVariants {
   TextUpdatedRectangle = 'textUpdatedRectangle',
   Number = 'number',
   NumberUpdated = 'numberUpdated',
+  ResizableUpdatable = 'resizableUpdatable',
 }
 
 export enum HandleVariants {
@@ -44,7 +45,14 @@ export type NumberNodeData = {
   isHovered?: boolean;
 };
 
-export type UpdatedNodeData = TextNodeData | NumberNodeData;
+export type ResizableNodeData = {
+  text?: string;
+  isHovered?: boolean;
+};
+
+export type ResizableNodeType = Node<ResizableNodeData, CustomNodesVariants.ResizableUpdatable>;
+
+export type UpdatedNodeData = TextNodeData | NumberNodeData | ResizableNodeData;
 
 export type TextNode = Node<TextNodeData, CustomNodesVariants.Text>;
 

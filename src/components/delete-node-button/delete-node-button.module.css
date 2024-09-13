@@ -1,0 +1,30 @@
+.deleteButton {
+  border-radius: 50%;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: -14px;
+  right: 5px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.deleteButton:hover .image {
+  transform: scale(1.05);
+  transition: transform ease 0.3s;
+}
+
+.deleteButton:hover {
+  box-shadow: var(--box-shadow-action-icon);
+  -webkit-box-shadow: var(--box-shadow-action-icon);
+  -moz-box-shadow: var(--box-shadow-action-icon);
+  background-color: transparent;
+}
+
+.image {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}

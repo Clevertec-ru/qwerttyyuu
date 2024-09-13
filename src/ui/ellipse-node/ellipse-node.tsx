@@ -1,6 +1,6 @@
 import { CSSProperties, FC, PropsWithChildren } from 'react';
-
 import classnames from 'classnames';
+
 import styles from './ellipse-node.module.css';
 
 type EllipseNodeProps = {
@@ -13,11 +13,13 @@ export const EllipseNode: FC<PropsWithChildren<EllipseNodeProps>> = ({
   outlined = false,
   dashed = false,
   ...stylesProps
-}) => (
-  <div
-    className={classnames(styles.ellipse, { [styles.outlined]: outlined, [styles.dashed]: dashed })}
-    style={stylesProps}
-  >
-    {children}
-  </div>
-);
+}) => {
+  return (
+    <div
+      className={classnames(styles.ellipse, { [styles.outlined]: outlined, [styles.dashed]: dashed })}
+      style={stylesProps}
+    >
+      {children}
+    </div>
+  );
+};

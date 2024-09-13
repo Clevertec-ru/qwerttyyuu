@@ -1,9 +1,10 @@
 import { FC, PropsWithChildren } from 'react';
+
 import { NodeUiVariants, StyleNodeVariants } from '../types/node-ui-variants';
 import { EllipseNode } from '../ui/ellipse-node';
 import { RectangleNode } from '../ui/rectangle-node';
 import { RhombusNode } from '../ui/rhombus-node';
-import { TriangleNode } from '../ui/triange-node';
+import { TriangleNode } from '../ui/triangle-node';
 
 type SwitchedUiComponentProps = {
   variant?: StyleNodeVariants;

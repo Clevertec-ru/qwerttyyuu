@@ -1,7 +1,7 @@
 import { CSSProperties, FC, PropsWithChildren } from 'react';
+import classnames from 'classnames';
 
 import styles from './rhombus-node.module.css';
-import classnames from 'classnames';
 
 type RhombusNodeProps = { outlined?: boolean } & CSSProperties;
 

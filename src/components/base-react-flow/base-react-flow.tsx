@@ -1,75 +1,107 @@
-import {
-  addEdge,
-  applyEdgeChanges,
-  applyNodeChanges,
-  Edge,
-  Node,
-  OnConnect,
-  OnEdgesChange,
-  OnNodeDrag,
-  OnNodesChange,
-  ReactFlow,
-} from '@xyflow/react';
-
 import '@xyflow/react/dist/style.css';
 import { FC, PropsWithChildren, useCallback, useState } from 'react';
+import {
+  addEdge,
+  applyNodeChanges,
+  Node,
+  NodeMouseHandler,
+  OnConnect,
+  OnNodesChange,
+  ReactFlow,
+  useEdgesState,
+} from '@xyflow/react';
 
 import { initialEdges } from '../../constants/initial-edges';
 import { initialNodes } from '../../constants/initial-nodes';
 import { defaultEdgeOptions } from '../../constants/default-edges-options';
 import { fitViewOptions } from '../../constants/fit-view-options';
 import { nodeTypes } from '../../constants/node-types';
+import { PositionableEdge } from '../positionable-edge/positionable-edge';
+import { defaultMarkerStyles } from '../../constants/default-marker-styles';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
-  const [edges, setEdges] = useState<Edge[]>(initialEdges);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  const onConnect: OnConnect = useCallback(
-    (connection) =>
-      setEdges((eds) => {
-        // console.log('CONNECTION', connection);
-        // console.log('EDGES', eds);
-        return addEdge(connection, eds);
-      }),
-    [setEdges]
-  );
+  const proOptions = { hideAttribution: true };
+
+  const edgeTypes = {
+    positionableedge: PositionableEdge,
+  };
+
+  const onConnect: OnConnect = useCallback((params) => {
+    const newEdge = {
+      ...params,
+      type: 'positionableedge',
+      data: {
+        type: 'default',
+        positionHandlers: [],
+      },
+      ...defaultMarkerStyles,
+    };
+    setEdges((eds) => addEdge(newEdge, eds));
+  }, []);
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
       setNodes((nds) => {
-        // console.log(nds, 'NODES CHANGE EVENT');
         return applyNodeChanges(changes, nds);
       }),
     [setNodes]
   );
 
-  const onEdgesChange: OnEdgesChange = useCallback(
-    (changes) =>
-      setEdges((eds) => {
-        // console.log(eds, 'EDGES CHANGE EVENT');
-        return applyEdgeChanges(changes, eds);
-      }),
-    [setEdges]
-  );
+  const onDeleteNode = useCallback((id: string) => {
+    setNodes((nds) => nds.filter((node) => node.id !== id));
+  }, []);
 
-  const onNodeDrag: OnNodeDrag = (_, node) => {
-    // console.log('drag event', node.id, node.data);
-  };
+  const nodesWithDelete = nodes.map((node) => {
+    return {
+      ...node,
+      data: {
+        ...node.data,
+        onDelete: () => {
+          onDeleteNode(node.id);
+        },
+      },
+    };
+  });
+
+  const onNodeMouseLeave: NodeMouseHandler = useCallback((_, currNode) => {
+    setNodes((nodes) =>
+      nodes.map((node) => {
+        if (currNode.id !== node.id) return node;
+        const prevData = node.data;
+        return { ...node, data: prevData ? { ...prevData, isHovered: false } : { isHovered: false } };
+      })
+    );
+  }, []);
+
+  const onNodeMouseEnter: NodeMouseHandler = useCallback((_, currNode) => {
+    setNodes((nodes) =>
+      nodes.map((node) => {
+        if (currNode.id !== node.id) return node;
+        const prevData = node.data;
+        return { ...node, data: prevData ? { ...prevData, isHovered: true } : { isHovered: false } };
+      })
+    );
+  }, []);
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
-        nodes={nodes}
+        nodes={nodesWithDelete}
         edges={edges}
+        edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
         fitView
         fitViewOptions={fitViewOptions}
         nodeTypes={nodeTypes}
         onConnect={onConnect}
-        onNodeDrag={onNodeDrag}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        draggable
+        onNodeMouseEnter={onNodeMouseEnter}
+        onNodeMouseLeave={onNodeMouseLeave}
+        proOptions={proOptions}
       >
         {children}
       </ReactFlow>

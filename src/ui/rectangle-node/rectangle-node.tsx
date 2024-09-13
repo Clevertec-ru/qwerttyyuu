@@ -1,5 +1,6 @@
 import { CSSProperties, FC, PropsWithChildren } from 'react';
 import classnames from 'classnames';
+
 import styles from './rectangle-node.module.css';
 
 type RectangleNodeProps = {

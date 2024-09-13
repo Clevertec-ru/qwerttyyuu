@@ -1,4 +1,5 @@
 import { BuiltInNode, Node } from '@xyflow/react';
+
 import { StyleNodeVariants } from './node-ui-variants';
 
 export enum CustomNodesVariants {
@@ -33,12 +34,14 @@ export type TextNodeData = {
   wrapperStyle: StyleNodeVariants;
   handleTypes?: HandleTypes;
   multipleHandles?: Partial<MultipleHandlesType>;
+  isHovered?: boolean;
 };
 export type NumberNodeData = {
   number: string;
   wrapperStyle: StyleNodeVariants;
   handleTypes?: HandleTypes;
   multipleHandles?: Partial<MultipleHandlesType>;
+  isHovered?: boolean;
 };
 
 export type UpdatedNodeData = TextNodeData | NumberNodeData;

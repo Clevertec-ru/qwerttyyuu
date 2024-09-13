@@ -34,14 +34,14 @@ export type TextNodeData = {
   wrapperStyle: StyleNodeVariants;
   handleTypes?: HandleTypes;
   multipleHandles?: Partial<MultipleHandlesType>;
-  onDelete?: () => void;
+  isHovered?: boolean;
 };
 export type NumberNodeData = {
   number: string;
   wrapperStyle: StyleNodeVariants;
   handleTypes?: HandleTypes;
   multipleHandles?: Partial<MultipleHandlesType>;
-  onDelete?: () => void;
+  isHovered?: boolean;
 };
 
 export type UpdatedNodeData = TextNodeData | NumberNodeData;

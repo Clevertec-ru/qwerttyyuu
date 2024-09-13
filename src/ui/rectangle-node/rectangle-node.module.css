@@ -8,22 +8,3 @@
   outline: calc(var(--small-outline-width) / 2) solid var(--rectangle-main-color);
   outline-offset: calc(var(--small-outline-width) / 2);
 }
-
-.deleteButton {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  position: absolute;
-  top: -10px;
-  right: -20px;
-  cursor: pointer;
-  padding: 0;
-  border: none;
-  background: none;
-  font-size: small;
-  color: rgb(180, 174, 174);
-}
-
-.deleteButton:hover {
-  background-color: antiquewhite;
-}

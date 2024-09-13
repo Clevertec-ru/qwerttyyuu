@@ -6,6 +6,7 @@ import {
   Edge,
   EdgeMouseHandler,
   Node,
+  NodeMouseHandler,
   OnConnect,
   OnNodeDrag,
   OnNodesChange,
@@ -58,26 +59,10 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
     // console.log('drag event', node.id, node.data);
   };
 
-  const onDeleteNode = useCallback((id: string) => {
-    setNodes((nds) => nds.filter((node) => node.id !== id));
-  }, []);
-
   const onReconnect: OnReconnect = useCallback(
     (oldEdge, newConnection) => setEdges((eds) => reconnectEdge(oldEdge, newConnection, eds)),
     []
   );
-
-  const nodesWithDelete = nodes.map((node) => {
-    return {
-      ...node,
-      data: {
-        ...node.data,
-        onDelete: () => {
-          onDeleteNode(node.id);
-        },
-      },
-    };
-  });
 
   const onEdgeMouseEnter: EdgeMouseHandler = useCallback((_, currentEdge) => {
     setEdges((eds) =>
@@ -107,10 +92,30 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
     );
   }, []);
 
+  const onNodeMouseLeave: NodeMouseHandler = useCallback((_, currNode) => {
+    setNodes((nodes) =>
+      nodes.map((node) => {
+        if (currNode.id !== node.id) return node;
+        const prevData = node.data;
+        return { ...node, data: prevData ? { ...prevData, isHovered: false } : { isHovered: false } };
+      })
+    );
+  }, []);
+
+  const onNodeMouseEnter: NodeMouseHandler = useCallback((_, currNode) => {
+    setNodes((nodes) =>
+      nodes.map((node) => {
+        if (currNode.id !== node.id) return node;
+        const prevData = node.data;
+        return { ...node, data: prevData ? { ...prevData, isHovered: true } : { isHovered: false } };
+      })
+    );
+  }, []);
+
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
-        nodes={nodesWithDelete}
+        nodes={nodes}
         edges={edges}
         edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
@@ -123,6 +128,8 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         onNodesChange={onNodesChange}
         onEdgeMouseLeave={onEdgeMouseLeave}
         onEdgeMouseEnter={onEdgeMouseEnter}
+        onNodeMouseEnter={onNodeMouseEnter}
+        onNodeMouseLeave={onNodeMouseLeave}
         proOptions={proOptions}
       >
         {children}

@@ -4,10 +4,13 @@ import { Handle, NodeProps, Position } from '@xyflow/react';
 import { isTextNodeData } from '../../helpers/is-text-node-data';
 import { UpdatedNodeType } from '../../types/custom-nodes-variants';
 import { SwitchedUiComponent } from '../../hoc/switched-ui-component';
+import { DeleteNodeButton } from '../delete-node-button';
+import { getAddDeleteButtonPosition } from '../../helpers/get-add-delete-button-position';
+import { AddNodeButton } from '../add-node-button';
 
 import styles from './multiple-updated-node.module.css';
 
-export const MultipleUpdatedNode = ({ data }: NodeProps<UpdatedNodeType>) => {
+export const MultipleUpdatedNode = ({ data, id }: NodeProps<UpdatedNodeType>) => {
   if (!data.multipleHandles) return null;
 
   const [value, setValue] = useState(() => (isTextNodeData(data) ? data.text : data.number));
@@ -26,6 +29,8 @@ export const MultipleUpdatedNode = ({ data }: NodeProps<UpdatedNodeType>) => {
     rightHandleType,
     topHandleType,
   } = data.multipleHandles;
+
+  const { add: stylesDeleteBtn, delete: stylesAddBtn } = getAddDeleteButtonPosition(data.wrapperStyle);
 
   const topHandlesArr = Array.from({ length: topHandles || 0 });
   const leftHandlesArr = Array.from({ length: leftHandles || 0 });
@@ -54,7 +59,7 @@ export const MultipleUpdatedNode = ({ data }: NodeProps<UpdatedNodeType>) => {
             style={{ top: leftHandlesArr.length === 1 ? undefined : index * 10 }}
           />
         ))}
-      <SwitchedUiComponent variant={data.wrapperStyle} onDelete={data.onDelete}>
+      <SwitchedUiComponent variant={data.wrapperStyle}>
         <label className={styles.label}>
           <input
             className={styles.input}
@@ -63,6 +68,9 @@ export const MultipleUpdatedNode = ({ data }: NodeProps<UpdatedNodeType>) => {
             onChange={onValueChange}
           />
         </label>
+        {data.isHovered && <DeleteNodeButton id={id} {...stylesDeleteBtn} />}
+        {data.isHovered && <AddNodeButton id={id} {...stylesAddBtn} />}
+        AddNodeButton
       </SwitchedUiComponent>
       {Boolean(rightHandles) &&
         rightHandlesArr.map((_, index) => (

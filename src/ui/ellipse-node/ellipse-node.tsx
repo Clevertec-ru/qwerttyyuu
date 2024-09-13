@@ -4,7 +4,6 @@ import classnames from 'classnames';
 import styles from './ellipse-node.module.css';
 
 type EllipseNodeProps = {
-  onDelete?: () => void;
   outlined?: boolean;
   dashed?: boolean;
 } & CSSProperties;
@@ -13,17 +12,14 @@ export const EllipseNode: FC<PropsWithChildren<EllipseNodeProps>> = ({
   children,
   outlined = false,
   dashed = false,
-  onDelete,
   ...stylesProps
-}) => (
-  <div
-    className={classnames(styles.ellipse, { [styles.outlined]: outlined, [styles.dashed]: dashed })}
-    style={stylesProps}
-  >
-    {children}
-
-    <button onClick={onDelete} className={styles.deleteButton}>
-      ✖
-    </button>
-  </div>
-);
+}) => {
+  return (
+    <div
+      className={classnames(styles.ellipse, { [styles.outlined]: outlined, [styles.dashed]: dashed })}
+      style={stylesProps}
+    >
+      {children}
+    </div>
+  );
+};

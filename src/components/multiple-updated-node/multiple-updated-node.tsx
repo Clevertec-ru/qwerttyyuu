@@ -70,7 +70,6 @@ export const MultipleUpdatedNode = ({ data, id }: NodeProps<UpdatedNodeType>) =>
         </label>
         {data.isHovered && <DeleteNodeButton id={id} {...stylesDeleteBtn} />}
         {data.isHovered && <AddNodeButton id={id} {...stylesAddBtn} />}
-        AddNodeButton
       </SwitchedUiComponent>
       {Boolean(rightHandles) &&
         rightHandlesArr.map((_, index) => (

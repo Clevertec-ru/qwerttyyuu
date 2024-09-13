@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   EdgeLabelRenderer,
   EdgeProps,
@@ -7,9 +8,24 @@ import {
   useReactFlow,
 } from '@xyflow/react';
 
-import { ClickableEdge } from '../clikable-edge/clikable-edge';
+import ClickableEdge from '../clikable-edge/clikable-edge';
+
 import './positionable-edge.css';
-import { PositionHandler, EdgeDataPositionable, PositionableEdgeType } from '../../types/edge-variants';
+
+type PositionHandler = {
+  x: number;
+  y: number;
+  active: number | undefined;
+};
+
+type EdgeData = {
+  type: string;
+  positionHandlers: PositionHandler[];
+};
+
+type PositionableEdgeProps = EdgeProps & {
+  data: EdgeData;
+};
 
 export function PositionableEdge({
   id,
@@ -21,10 +37,13 @@ export function PositionableEdge({
   targetPosition,
   style = {},
   markerEnd,
+  markerStart,
   data,
-}: EdgeProps<PositionableEdgeType>) {
+}: PositionableEdgeProps) {
   const xyFlowInstance = useReactFlow();
-  const positionHandlers = data?.positionHandlers ?? [];
+  const [hovered, setHovered] = useState(false);
+
+  const positionHandlers = data.positionHandlers ?? [];
 
   const type = data?.type ?? 'default';
   const edgeSegmentsCount = positionHandlers.length + 1;
@@ -79,6 +98,12 @@ export function PositionableEdge({
       {edgeSegmentsArray.map(({ edgePath }, index) => (
         <ClickableEdge
           id={`${id}_segment_${index}`}
+          onMouseEnter={() => {
+            setHovered(true);
+          }}
+          onMouseLeave={() => {
+            setHovered(false);
+          }}
           onClick={(event) => {
             const position = xyFlowInstance.screenToFlowPosition({
               x: event.clientX,
@@ -87,7 +112,7 @@ export function PositionableEdge({
 
             xyFlowInstance.setEdges((edges) => {
               const edgeIndex = edges.findIndex((edge) => edge.id === id);
-              const { positionHandlers } = edges[edgeIndex].data as EdgeDataPositionable;
+              const { positionHandlers } = edges[edgeIndex].data as EdgeData;
 
               positionHandlers.splice(index, 0, {
                 x: position.x,
@@ -100,8 +125,12 @@ export function PositionableEdge({
           }}
           key={`edge${id}_segment${index}`}
           path={edgePath}
-          markerEnd={markerEnd}
-          style={style}
+          markerEnd={hovered ? markerEnd : undefined}
+          markerStart={hovered ? markerStart : undefined}
+          style={{
+            ...style,
+            stroke: '#b1b1b7',
+          }}
         />
       ))}
       {positionHandlers.map(({ x, y, active }: PositionHandler, handlerIndex: number) => (
@@ -126,7 +155,7 @@ export function PositionableEdge({
                   y: event.clientY,
                 });
                 xyFlowInstance.setEdges((edges) => {
-                  const { positionHandlers } = edges[activeEdge].data as EdgeDataPositionable;
+                  const { positionHandlers } = edges[activeEdge].data as EdgeData;
 
                   positionHandlers[handlerIndex] = {
                     x: position.x,
@@ -139,7 +168,7 @@ export function PositionableEdge({
               onMouseUp={() => {
                 xyFlowInstance.setEdges((edges) => {
                   edges.forEach((edge) => {
-                    const { positionHandlers } = edge.data as EdgeDataPositionable;
+                    const { positionHandlers } = edge.data as EdgeData;
 
                     positionHandlers.forEach((handler) => {
                       handler.active = -1;
@@ -155,7 +184,7 @@ export function PositionableEdge({
                 onMouseDown={() => {
                   xyFlowInstance.setEdges((edges) => {
                     const edgeIndex = edges.findIndex((edge) => edge.id === id);
-                    const { positionHandlers } = edges[edgeIndex].data as EdgeDataPositionable;
+                    const { positionHandlers } = edges[edgeIndex].data as EdgeData;
 
                     positionHandlers[handlerIndex].active = edgeIndex;
                     return edges;
@@ -165,7 +194,7 @@ export function PositionableEdge({
                   event.preventDefault();
                   xyFlowInstance.setEdges((edges) => {
                     const edgeIndex = edges.findIndex((edge) => edge.id === id);
-                    const { positionHandlers } = edges[edgeIndex].data as EdgeDataPositionable;
+                    const { positionHandlers } = edges[edgeIndex].data as EdgeData;
 
                     positionHandlers.splice(handlerIndex, 1);
                     return edges;

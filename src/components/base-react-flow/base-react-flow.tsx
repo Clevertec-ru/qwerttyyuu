@@ -3,94 +3,68 @@ import { FC, PropsWithChildren, useCallback, useState } from 'react';
 import {
   addEdge,
   applyNodeChanges,
-  Edge,
-  EdgeMouseHandler,
   Node,
   NodeMouseHandler,
   OnConnect,
-  OnNodeDrag,
   OnNodesChange,
-  OnReconnect,
   ReactFlow,
-  reconnectEdge,
+  useEdgesState,
 } from '@xyflow/react';
 
+import { initialEdges } from '../../constants/initial-edges';
 import { initialNodes } from '../../constants/initial-nodes';
 import { defaultEdgeOptions } from '../../constants/default-edges-options';
 import { fitViewOptions } from '../../constants/fit-view-options';
 import { nodeTypes } from '../../constants/node-types';
-import { edgeTypes } from '../../constants/edge-types';
-import { initialEdges } from '../../constants/initial-edges';
+import { PositionableEdge } from '../positionable-edge/positionable-edge';
 import { defaultMarkerStyles } from '../../constants/default-marker-styles';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
-  const [edges, setEdges] = useState<Edge[]>(initialEdges);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const proOptions = { hideAttribution: true };
 
-  const onConnect: OnConnect = useCallback(
-    (params) => {
-      const newEdge = {
-        ...params,
-        ...defaultMarkerStyles,
-        data: {
-          type: 'default',
-          positionHandlers: [],
-          isHovered: false,
-        },
-      };
+  const edgeTypes = {
+    positionableedge: PositionableEdge,
+  };
 
-      setEdges((eds) => addEdge(newEdge, eds));
-    },
-    [setEdges]
-  );
+  const onConnect: OnConnect = useCallback((params) => {
+    const newEdge = {
+      ...params,
+      type: 'positionableedge',
+      data: {
+        type: 'default',
+        positionHandlers: [],
+      },
+      ...defaultMarkerStyles,
+    };
+    setEdges((eds) => addEdge(newEdge, eds));
+  }, []);
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
       setNodes((nds) => {
-        // console.log(nds, 'NODES CHANGE EVENT');
         return applyNodeChanges(changes, nds);
       }),
     [setNodes]
   );
 
-  const onNodeDrag: OnNodeDrag = (_, node) => {
-    // console.log('drag event', node.id, node.data);
-  };
-
-  const onReconnect: OnReconnect = useCallback(
-    (oldEdge, newConnection) => setEdges((eds) => reconnectEdge(oldEdge, newConnection, eds)),
-    []
-  );
-
-  const onEdgeMouseEnter: EdgeMouseHandler = useCallback((_, currentEdge) => {
-    setEdges((eds) =>
-      eds.map((elem) => {
-        if (elem.id !== currentEdge.id) return elem;
-
-        const prevData = elem.data;
-        return {
-          ...elem,
-          data: prevData ? { ...prevData, isHovered: true } : { isHovered: true },
-        };
-      })
-    );
+  const onDeleteNode = useCallback((id: string) => {
+    setNodes((nds) => nds.filter((node) => node.id !== id));
   }, []);
 
-  const onEdgeMouseLeave: EdgeMouseHandler = useCallback((_, currentEdge) => {
-    setEdges((eds) =>
-      eds.map((elem) => {
-        if (elem.id !== currentEdge.id) return elem;
-
-        const prevData = elem.data;
-        return {
-          ...elem,
-          data: prevData ? { ...prevData, isHovered: false } : { isHovered: false },
-        };
-      })
-    );
-  }, []);
+  const nodesWithDelete = nodes.map((node) => {
+    return {
+      ...node,
+      data: {
+        ...node.data,
+        onDelete: () => {
+          onDeleteNode(node.id);
+        },
+      },
+    };
+  });
 
   const onNodeMouseLeave: NodeMouseHandler = useCallback((_, currNode) => {
     setNodes((nodes) =>
@@ -115,7 +89,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
-        nodes={nodes}
+        nodes={nodesWithDelete}
         edges={edges}
         edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
@@ -123,11 +97,8 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         fitViewOptions={fitViewOptions}
         nodeTypes={nodeTypes}
         onConnect={onConnect}
-        onReconnect={onReconnect}
-        onNodeDrag={onNodeDrag}
         onNodesChange={onNodesChange}
-        onEdgeMouseLeave={onEdgeMouseLeave}
-        onEdgeMouseEnter={onEdgeMouseEnter}
+        onEdgesChange={onEdgesChange}
         onNodeMouseEnter={onNodeMouseEnter}
         onNodeMouseLeave={onNodeMouseLeave}
         proOptions={proOptions}

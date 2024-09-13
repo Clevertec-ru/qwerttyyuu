@@ -25,7 +25,7 @@ export type PositionHandler = {
 export type EdgeDataPositionable = {
   type: string;
   positionHandlers: PositionHandler[];
-  isHovered?: boolean;
+  isHoveredEdge?: boolean;
 };
 
 export type CustomEdge = Edge<EdgeDataType, CustomEdgeVariants.Marked>;

@@ -1,16 +1,19 @@
 import { BaseEdgeProps } from '@xyflow/react';
-import { MouseEvent } from 'react';
 
 type ClickableEdgeProps = {
-  onClick: (event: MouseEvent<SVGPathElement>) => void;
+  onClick: (event: React.MouseEvent<SVGPathElement>) => void;
+  onMouseEnter?: (event: React.MouseEvent<SVGPathElement>) => void;
+  onMouseLeave?: (event: React.MouseEvent<SVGPathElement>) => void;
 };
-export const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
+const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
   id,
   path,
   style,
   markerEnd,
   markerStart,
   interactionWidth = 20,
+  onMouseEnter,
+  onMouseLeave,
   onClick,
 }) => {
   return (
@@ -23,6 +26,8 @@ export const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
         className='react-flow__edge-path'
         markerEnd={markerEnd}
         markerStart={markerStart}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       />
       {interactionWidth && (
         <path
@@ -32,8 +37,14 @@ export const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
           strokeWidth={interactionWidth}
           className='react-flow__edge-interaction'
           onClick={onClick}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
         />
       )}
     </>
   );
 };
+
+ClickableEdge.displayName = 'BaseEdge';
+
+export default ClickableEdge;

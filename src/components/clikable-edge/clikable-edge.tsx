@@ -1,6 +1,7 @@
 import { BaseEdgeProps } from '@xyflow/react';
 import { useState } from 'react';
 
+import './clikable-edge.css';
 import { getMidPoint } from '../../helpers/get-mid-point';
 
 type ClickableEdgeProps = {
@@ -51,10 +52,7 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
         <text
           x={midPoint.x}
           y={midPoint.y - 10}
-          fontSize='16'
-          fill='red'
-          cursor='pointer'
-          textAnchor='middle'
+          className='delete-icon'
           onClick={(e) => {
             e.stopPropagation();
             onDelete();

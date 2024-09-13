@@ -37,7 +37,6 @@ export function PositionableEdge({
   targetPosition,
   style = {},
   markerEnd,
-  markerStart,
   data,
 }: PositionableEdgeProps) {
   const xyFlowInstance = useReactFlow();
@@ -92,6 +91,10 @@ export function PositionableEdge({
     edgeSegmentsArray.push({ edgePath, labelX, labelY });
   }
 
+  const handleDeleteEdge = () => {
+    xyFlowInstance.setEdges((edges) => edges.filter((edge) => edge.id !== id));
+  };
+
   return (
     <>
       {edgeSegmentsArray.map(({ edgePath }, index) => (
@@ -123,6 +126,7 @@ export function PositionableEdge({
             ...style,
             stroke: '#b1b1b7',
           }}
+          onDelete={handleDeleteEdge}
         />
       ))}
       {positionHandlers.map(({ x, y, active }: PositionHandler, handlerIndex: number) => (

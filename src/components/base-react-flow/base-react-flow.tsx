@@ -17,6 +17,7 @@ import { fitViewOptions } from '../../constants/fit-view-options';
 import { nodeTypes } from '../../constants/node-types';
 import { PositionableEdge } from '../positionable-edge/positionable-edge';
 import { defaultMarkerStyles } from '../../constants/default-marker-styles';
+import { CustomEdgeVariants, EdgeType } from '../../types/edge-variants';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
@@ -31,9 +32,9 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const onConnect: OnConnect = useCallback((params) => {
     const newEdge = {
       ...params,
-      type: 'positionableedge',
+      type: CustomEdgeVariants.Positionable,
       data: {
-        type: 'default',
+        type: EdgeType.SmoothStep,
         positionHandlers: [],
       },
       ...defaultMarkerStyles,

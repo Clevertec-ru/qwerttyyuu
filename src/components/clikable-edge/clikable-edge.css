@@ -1,0 +1,10 @@
+.delete-icon {
+  font-size: 10px;
+  fill: var(--demo-attention);
+  cursor: pointer;
+  text-anchor: middle;
+}
+
+.delete-icon:hover {
+  box-shadow: var(--box-shadow-action-icon);
+}

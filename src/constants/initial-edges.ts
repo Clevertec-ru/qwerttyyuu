@@ -1,7 +1,7 @@
 import { Edge } from '@xyflow/react';
 import { CSSProperties } from 'react';
 
-import { defaultMarkerStyles } from './default-marker-styles';
+import { defaultMarkerStyles, markerStyles } from './default-marker-styles';
 
 const defaultLabelStyles: CSSProperties = { fontSize: 14, padding: 5 };
 
@@ -152,5 +152,16 @@ export const initialEdges: Edge[] = [
       positionHandlers: [],
     },
     ...defaultMarkerStyles,
+  },
+  {
+    id: 'el3-14',
+    source: '3',
+    target: '14',
+    type: 'positionableedge',
+    data: {
+      type: 'default',
+      positionHandlers: [],
+    },
+    markerEnd: markerStyles,
   },
 ];

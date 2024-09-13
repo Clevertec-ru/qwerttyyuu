@@ -1,16 +1,33 @@
 :root {
+  /* colors, backgrounds */
+  --rhombus-main-color: #8331ff;
+  --rhombus-ellipsis-main-color: #6b8dff;
+  --triangle-main-color: #d48a01;
+  --rectangle-main-color: #006a8a;
+  --ellipse-main-color: #fdcb27;
   --white: #fff;
   --demo-output: #ff0072;
   --demo-input: #3877f3;
   --demo-attention: #ff4d4f;
   --demo-map-bg: #eee;
 
+  /* sizes */
+  --outline-width: 10px;
+  --small-outline-width: 4px;
   --demo-height: 600px;
   --demo-width: 800px;
-
-  --gap-s: 10px;
-
   --radius: 8px;
+
+  /* fonts */
+  --main-font-size: 18px;
+  --main-font-weight: 500;
+
+  /* shadows */
+  --box-shadow-action-icon: 0 0 5px -2px rgba(49, 49, 49, 0.8);
+
+  /* gaps */
+  --gap-small: 6px;
+  --gap-s: 10px;
 }
 
 * {
@@ -27,24 +44,6 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /* colors, backgrounds */
-  --rhombus-main-color: #8331ff;
-  --rhombus-ellipsis-main-color: #6b8dff;
-  --triangle-main-color: #d48a01;
-  --rectangle-main-color: #006a8a;
-  --ellipse-main-color: #fdcb27;
-
-  /* sizes */
-  --outline-width: 10px;
-  --small-outline-width: 4px;
-
-  /* fonts */
-  --main-font-size: 18px;
-  --main-font-weight: 500;
-
-  /* shadows */
-  --box-shadow-action-icon: 0 0 5px -2px rgba(49, 49, 49, 0.8);
 }
 
 button {

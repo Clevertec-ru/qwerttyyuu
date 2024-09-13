@@ -1,7 +1,31 @@
-.input {
+.internalArea {
+  display: inline-block;
   width: 100%;
   height: 100%;
   outline: none;
   border: none;
   border-radius: var(--radius);
+  font-size: 16px;
+  background-color: inherit;
+  padding: var(--gap-small);
+  color: white;
+  text-align: center;
+}
+
+.internalArea::placeholder {
+  color: white;
+}
+
+.resizerWrapper {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
+.resizeImg {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
 }

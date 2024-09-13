@@ -1,0 +1,7 @@
+.handle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid green;
+  background-color: rgb(255, 255, 255);
+}

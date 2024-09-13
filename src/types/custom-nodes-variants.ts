@@ -9,6 +9,7 @@ export enum CustomNodesVariants {
   TextUpdatedRectangle = 'textUpdatedRectangle',
   Number = 'number',
   NumberUpdated = 'numberUpdated',
+  ResizableUpdatable = 'resizableUpdatable',
 }
 
 export enum HandleVariants {

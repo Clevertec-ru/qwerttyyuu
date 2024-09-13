@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   EdgeLabelRenderer,
   EdgeProps,
@@ -9,8 +8,15 @@ import {
 } from '@xyflow/react';
 
 import ClickableEdge from '../clikable-edge/clikable-edge';
-
 import './positionable-edge.css';
+import {
+  handleContextMenu,
+  handleMouseDown,
+  handleMouseMove,
+  handleMouseUp,
+  handleTouchMove,
+  handleTouchStart,
+} from '../../helpers/positionable-edge-handlers';
 
 type PositionHandler = {
   x: number;
@@ -18,7 +24,7 @@ type PositionHandler = {
   active: number | undefined;
 };
 
-type EdgeData = {
+export type EdgeData = {
   type: string;
   positionHandlers: PositionHandler[];
 };
@@ -40,9 +46,7 @@ export function PositionableEdge({
   data,
 }: PositionableEdgeProps) {
   const xyFlowInstance = useReactFlow();
-
   const positionHandlers = data.positionHandlers ?? [];
-
   const type = data?.type ?? 'default';
   const edgeSegmentsCount = positionHandlers.length + 1;
   let edgeSegmentsArray = [];
@@ -140,63 +144,18 @@ export function PositionableEdge({
             <div
               className={`positionHandlerEventContainer ${active} ${`${active ?? -1}` !== '-1' ? 'active' : ''}`}
               data-active={active ?? -1}
-              onMouseMove={(event) => {
-                const target = event.target as HTMLElement;
-                let activeEdge = parseInt(target.dataset.active ?? '-1');
-                if (activeEdge === -1) {
-                  return;
-                }
-                const position = xyFlowInstance.screenToFlowPosition({
-                  x: event.clientX,
-                  y: event.clientY,
-                });
-                xyFlowInstance.setEdges((edges) => {
-                  const { positionHandlers } = edges[activeEdge].data as EdgeData;
-
-                  positionHandlers[handlerIndex] = {
-                    x: position.x,
-                    y: position.y,
-                    active: activeEdge,
-                  };
-                  return edges;
-                });
-              }}
-              onMouseUp={() => {
-                xyFlowInstance.setEdges((edges) => {
-                  edges.forEach((edge) => {
-                    const { positionHandlers } = edge.data as EdgeData;
-
-                    positionHandlers.forEach((handler) => {
-                      handler.active = -1;
-                    });
-                  });
-                  return edges;
-                });
-              }}
+              onMouseMove={(event) => handleMouseMove(event, active, handlerIndex, xyFlowInstance)}
+              onTouchMove={(event) => handleTouchMove(event, active, handlerIndex, xyFlowInstance)}
+              onMouseUp={() => handleMouseUp(xyFlowInstance)}
+              onTouchEnd={() => handleMouseUp(xyFlowInstance)}
             >
               <button
                 className='positionHandler'
                 data-active={active ?? -1}
-                onMouseDown={() => {
-                  xyFlowInstance.setEdges((edges) => {
-                    const edgeIndex = edges.findIndex((edge) => edge.id === id);
-                    const { positionHandlers } = edges[edgeIndex].data as EdgeData;
-
-                    positionHandlers[handlerIndex].active = edgeIndex;
-                    return edges;
-                  });
-                }}
-                onContextMenu={(event) => {
-                  event.preventDefault();
-                  xyFlowInstance.setEdges((edges) => {
-                    const edgeIndex = edges.findIndex((edge) => edge.id === id);
-                    const { positionHandlers } = edges[edgeIndex].data as EdgeData;
-
-                    positionHandlers.splice(handlerIndex, 1);
-                    return edges;
-                  });
-                }}
-              ></button>
+                onMouseDown={() => handleMouseDown(handlerIndex, xyFlowInstance, id)}
+                onTouchStart={(event) => handleTouchStart(event, handlerIndex, xyFlowInstance, id)}
+                onContextMenu={(event) => handleContextMenu(event, handlerIndex, xyFlowInstance, id)}
+              />
             </div>
           </div>
         </EdgeLabelRenderer>

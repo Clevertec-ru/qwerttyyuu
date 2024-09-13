@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import './clikable-edge.css';
 import { getMidPoint } from '../../helpers/get-mid-point';
+import { handleTouchStart } from '../../helpers/delete-edge-handler.ts';
 
 type ClickableEdgeProps = {
   onClick: (event: React.MouseEvent<SVGPathElement>) => void;
@@ -19,9 +20,7 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
   onClick,
   onDelete,
 }) => {
-  const [showDeleteIcon, setShowDeleteIcon] = useState(false);
-
-  let timer = 0;
+  const [isShowDeleteIcon, setShowDeleteIcon] = useState(false);
 
   const midPoint = getMidPoint(path);
 
@@ -46,21 +45,14 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
           onClick={onClick}
           onContextMenu={(e) => {
             e.preventDefault();
-            setShowDeleteIcon(!showDeleteIcon);
+            setShowDeleteIcon(!isShowDeleteIcon);
           }}
           onTouchStart={(e) => {
-            e.preventDefault();
-            timer = Date.now();
-          }}
-          onTouchEnd={(e) => {
-            e.preventDefault();
-            if (Date.now() - timer > 600) {
-              setShowDeleteIcon(!showDeleteIcon);
-            }
+            handleTouchStart(e, setShowDeleteIcon, isShowDeleteIcon)
           }}
         />
       )}
-      {showDeleteIcon && (
+      {isShowDeleteIcon && (
         <text
           x={midPoint.x}
           y={midPoint.y - 10}

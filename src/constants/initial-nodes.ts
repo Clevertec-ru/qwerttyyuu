@@ -18,7 +18,7 @@ export const initialNodes: Node<UpdatedNodeData, string>[] = [
       },
     },
     type: CustomNodesVariants.TextUpdatedMultiple,
-    position: { x: 500, y: 100 },
+    position: { x: 500, y: 110 },
     height: 40,
     width: 200,
     draggable: true,

@@ -1,10 +1,14 @@
 import { BaseEdgeProps } from '@xyflow/react';
+import { useState } from 'react';
+
+import './clikable-edge.css';
+import { getMidPoint } from '../../helpers/get-mid-point';
 
 type ClickableEdgeProps = {
   onClick: (event: React.MouseEvent<SVGPathElement>) => void;
-  onMouseEnter?: (event: React.MouseEvent<SVGPathElement>) => void;
-  onMouseLeave?: (event: React.MouseEvent<SVGPathElement>) => void;
+  onDelete: () => void;
 };
+
 const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
   id,
   path,
@@ -12,10 +16,13 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
   markerEnd,
   markerStart,
   interactionWidth = 20,
-  onMouseEnter,
-  onMouseLeave,
   onClick,
+  onDelete,
 }) => {
+  const [showDeleteIcon, setShowDeleteIcon] = useState(false);
+
+  const midPoint = getMidPoint(path);
+
   return (
     <>
       <path
@@ -26,8 +33,6 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
         className='react-flow__edge-path'
         markerEnd={markerEnd}
         markerStart={markerStart}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
       />
       {interactionWidth && (
         <path
@@ -37,9 +42,24 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
           strokeWidth={interactionWidth}
           className='react-flow__edge-interaction'
           onClick={onClick}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            setShowDeleteIcon(!showDeleteIcon);
+          }}
         />
+      )}
+      {showDeleteIcon && (
+        <text
+          x={midPoint.x}
+          y={midPoint.y - 10}
+          className='delete-icon'
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+        >
+          ❌
+        </text>
       )}
     </>
   );

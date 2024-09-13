@@ -79,34 +79,54 @@ export const handleMouseUp = (xyFlowInstance: ReactFlowInstance<Node, Edge>) => 
   });
 };
 
-export const handleLongPress = (
+export const handleTouchStart = (
   event: React.TouchEvent,
-  id: string,
   handlerIndex: number,
-  xyFlowInstance: ReactFlowInstance<Node, Edge>
+  xyFlowInstance: ReactFlowInstance<Node, Edge>,
+  id: string
 ) => {
-  const longPressDelay = 500;
   let timeoutId: ReturnType<typeof setTimeout>;
+  let isMoving = false;
 
   const onTouchMove = () => {
+    xyFlowInstance.setEdges((edges) => {
+      const edgeIndex = edges.findIndex((edge) => edge.id === id);
+      const { positionHandlers } = edges[edgeIndex].data as EdgeData;
+
+      positionHandlers[handlerIndex].active = edgeIndex;
+      return edges;
+    });
+    isMoving = true;
     clearTimeout(timeoutId);
   };
 
   const onTouchEnd = () => {
-    clearTimeout(timeoutId); // Отменить таймер
+    clearTimeout(timeoutId);
     event.target.removeEventListener('touchmove', onTouchMove);
     event.target.removeEventListener('touchend', onTouchEnd);
+
+    if (!isMoving) {
+      xyFlowInstance.setEdges((edges: Edge[]) => {
+        const edgeIndex = edges.findIndex((edge) => edge.id === id);
+        const { positionHandlers } = edges[edgeIndex].data as EdgeData;
+
+        positionHandlers.splice(handlerIndex, 1);
+        return edges;
+      });
+    }
   };
 
   timeoutId = setTimeout(() => {
-    xyFlowInstance.setEdges((edges: Edge[]) => {
-      const edgeIndex = edges.findIndex((edge) => edge.id === id);
-      const { positionHandlers } = edges[edgeIndex].data as EdgeData;
+    if (!isMoving) {
+      xyFlowInstance.setEdges((edges: Edge[]) => {
+        const edgeIndex = edges.findIndex((edge) => edge.id === id);
+        const { positionHandlers } = edges[edgeIndex].data as EdgeData;
 
-      positionHandlers.splice(handlerIndex, 1);
-      return edges;
-    });
-  }, longPressDelay);
+        positionHandlers.splice(handlerIndex, 1);
+        return edges;
+      });
+    }
+  }, 1000);
 
   event.target.addEventListener('touchmove', onTouchMove);
   event.target.addEventListener('touchend', onTouchEnd);

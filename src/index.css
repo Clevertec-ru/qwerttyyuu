@@ -42,6 +42,9 @@ body {
   /* fonts */
   --main-font-size: 18px;
   --main-font-weight: 500;
+
+  /* shadows */
+  --box-shadow-action-icon: 0 0 5px -2px rgba(49, 49, 49, 0.8);
 }
 
 button {

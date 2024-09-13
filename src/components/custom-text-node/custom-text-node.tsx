@@ -6,31 +6,36 @@ import { isTextNodeData } from '../../helpers/is-text-node-data';
 import { SwitchedUiComponent } from '../../hoc/switched-ui-component';
 import { NodeUiVariants } from '../../types/node-ui-variants';
 import { DeleteNodeButton } from '../delete-node-button';
-import { getDeleteButtonPosition } from '../../helpers/get-delete-button-position';
+import { getAddDeleteButtonPosition } from '../../helpers/get-add-delete-button-position';
+import { AddNodeButton } from '../add-node-button';
 
 import styles from './custom-text-node.module.css';
 
 export const CustomTextNode = ({ data, sourcePosition, targetPosition, id }: NodeProps<TextOrNumberNodeType>) => {
-  const targetMode = data.handleTypes && data.handleTypes === HandleVariants.TargetOnly;
-  const sourceMode = data.handleTypes && data.handleTypes === HandleVariants.SourceOnly;
-  const stylesDeleteBtn = getDeleteButtonPosition(data.wrapperStyle);
+  const { handleTypes, wrapperStyle, isHovered } = data;
+  data;
+  const targetMode = handleTypes && handleTypes === HandleVariants.TargetOnly;
+  const sourceMode = handleTypes && handleTypes === HandleVariants.SourceOnly;
+  const { add: stylesAddBtn, delete: stylesDeleteBtn } = getAddDeleteButtonPosition(wrapperStyle);
+
   return (
     <>
-      {(!data.handleTypes || targetMode) && <Handle type='target' position={targetPosition ?? Position.Top} />}
+      {(!handleTypes || targetMode) && <Handle type='target' position={targetPosition ?? Position.Top} />}
       <SwitchedUiComponent variant={data.wrapperStyle}>
         <div className={classnames(styles.content)}>
           <div
             className={classnames(styles.text, {
-              [styles.triangle]: data.wrapperStyle === NodeUiVariants.Triangle,
-              [styles.centered]: data.wrapperStyle !== NodeUiVariants.Triangle,
+              [styles.triangle]: wrapperStyle === NodeUiVariants.Triangle,
+              [styles.centered]: wrapperStyle !== NodeUiVariants.Triangle,
             })}
           >
             {isTextNodeData(data) ? data.text : data.number}
           </div>
         </div>
-        <DeleteNodeButton id={id} {...stylesDeleteBtn} />
+        {isHovered && <DeleteNodeButton id={id} {...stylesDeleteBtn} />}
+        {data.isHovered && <AddNodeButton id={id} {...stylesAddBtn} />}
       </SwitchedUiComponent>
-      {(!data.handleTypes || sourceMode) && <Handle type='source' position={sourcePosition ?? Position.Bottom} />}
+      {(!handleTypes || sourceMode) && <Handle type='source' position={sourcePosition ?? Position.Bottom} />}
     </>
   );
 };

@@ -6,6 +6,7 @@ import {
   Edge,
   EdgeMouseHandler,
   Node,
+  NodeMouseHandler,
   OnConnect,
   OnNodeDrag,
   OnNodesChange,
@@ -91,6 +92,26 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
     );
   }, []);
 
+  const onNodeMouseLeave: NodeMouseHandler = useCallback((_, currNode) => {
+    setNodes((nodes) =>
+      nodes.map((node) => {
+        if (currNode.id !== node.id) return node;
+        const prevData = node.data;
+        return { ...node, data: prevData ? { ...prevData, isHovered: false } : { isHovered: false } };
+      })
+    );
+  }, []);
+
+  const onNodeMouseEnter: NodeMouseHandler = useCallback((_, currNode) => {
+    setNodes((nodes) =>
+      nodes.map((node) => {
+        if (currNode.id !== node.id) return node;
+        const prevData = node.data;
+        return { ...node, data: prevData ? { ...prevData, isHovered: true } : { isHovered: false } };
+      })
+    );
+  }, []);
+
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
@@ -107,6 +128,8 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         onNodesChange={onNodesChange}
         onEdgeMouseLeave={onEdgeMouseLeave}
         onEdgeMouseEnter={onEdgeMouseEnter}
+        onNodeMouseEnter={onNodeMouseEnter}
+        onNodeMouseLeave={onNodeMouseLeave}
         proOptions={proOptions}
       >
         {children}

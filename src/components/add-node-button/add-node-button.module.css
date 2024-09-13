@@ -1,22 +1,22 @@
-.deleteButton {
+.addButton {
   border-radius: 50%;
   position: absolute;
   width: 20px;
   height: 20px;
   bottom: -14px;
-  right: 5px;
+  right: calc(5px + 25px);
   cursor: pointer;
   padding: 0;
   border: none;
   background-color: transparent;
 }
 
-.deleteButton:hover .image {
+.addButton:hover .image {
   transform: scale(1.05);
   transition: transform ease 0.3s;
 }
 
-.deleteButton:hover {
+.addButton:hover {
   box-shadow: var(--box-shadow-action-icon);
   -webkit-box-shadow: var(--box-shadow-action-icon);
   -moz-box-shadow: var(--box-shadow-action-icon);

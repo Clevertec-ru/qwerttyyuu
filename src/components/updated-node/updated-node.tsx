@@ -6,7 +6,8 @@ import { HandleVariants, UpdatedNodeType } from '../../types/custom-nodes-varian
 import { isTextNodeData } from '../../helpers/is-text-node-data';
 import { SwitchedUiComponent } from '../../hoc/switched-ui-component';
 import { DeleteNodeButton } from '../delete-node-button';
-import { getDeleteButtonPosition } from '../../helpers/get-delete-button-position';
+import { getAddDeleteButtonPosition } from '../../helpers/get-add-delete-button-position';
+import { AddNodeButton } from '../add-node-button';
 
 import styles from './updated-node.module.css';
 
@@ -19,7 +20,7 @@ export const UpdatedNode = ({ data, sourcePosition, targetPosition, id }: NodePr
 
   const targetMode = data.handleTypes && data.handleTypes === HandleVariants.TargetOnly;
   const sourceMode = data.handleTypes && data.handleTypes === HandleVariants.SourceOnly;
-  const stylesDeleteBtn = getDeleteButtonPosition(data.wrapperStyle);
+  const { delete: stylesDeleteBtn, add: stylesAddBtn } = getAddDeleteButtonPosition(data.wrapperStyle);
 
   return (
     <>
@@ -33,7 +34,8 @@ export const UpdatedNode = ({ data, sourcePosition, targetPosition, id }: NodePr
             onChange={onValueChange}
           />
         </label>
-        <DeleteNodeButton id={id} {...stylesDeleteBtn} />
+        {data.isHovered && <DeleteNodeButton id={id} {...stylesDeleteBtn} />}
+        {data.isHovered && <AddNodeButton id={id} {...stylesAddBtn} />}
       </SwitchedUiComponent>
       {(!data.handleTypes || sourceMode) && <Handle type='source' position={sourcePosition ?? Position.Bottom} />}
     </>

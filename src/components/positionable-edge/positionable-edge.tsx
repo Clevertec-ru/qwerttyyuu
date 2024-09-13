@@ -10,6 +10,8 @@ import {
 import ClickableEdge from '../clikable-edge/clikable-edge';
 import './positionable-edge.css';
 import {
+  handleContextMenu,
+  handleLongPress,
   handleMouseDown,
   handleMouseMove,
   handleMouseUp,
@@ -152,16 +154,8 @@ export function PositionableEdge({
                 data-active={active ?? -1}
                 onMouseDown={() => handleMouseDown(handlerIndex, xyFlowInstance, id)}
                 onTouchStart={() => handleMouseDown(handlerIndex, xyFlowInstance, id)}
-                onContextMenu={(event) => {
-                  event.preventDefault();
-                  xyFlowInstance.setEdges((edges) => {
-                    const edgeIndex = edges.findIndex((edge) => edge.id === id);
-                    const { positionHandlers } = edges[edgeIndex].data as EdgeData;
-
-                    positionHandlers.splice(handlerIndex, 1);
-                    return edges;
-                  });
-                }}
+                onContextMenu={(event) => handleContextMenu(event, handlerIndex, xyFlowInstance, id)}
+                onTouchEnd={(event) => handleLongPress(event, id, handlerIndex, xyFlowInstance)}
               ></button>
             </div>
           </div>

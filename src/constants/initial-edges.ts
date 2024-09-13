@@ -161,4 +161,15 @@ export const initialEdges: Edge[] = [
     },
     ...defaultMarkerStyles,
   },
+  {
+    id: 'el3-14',
+    source: '3',
+    target: '14',
+    type: CustomEdgeVariants.Positionable,
+    data: {
+      type: EdgeType.SmoothStep,
+      positionHandlers: [],
+    },
+    ...defaultMarkerStyles,
+  },
 ];

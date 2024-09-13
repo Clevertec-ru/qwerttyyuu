@@ -8,8 +8,9 @@
   --white: #fff;
   --demo-output: #ff0072;
   --demo-input: #3877f3;
-  --demo-attention: #ff4d4f;
+  --demo-attention: #ff4d41;
   --demo-map-bg: #eee;
+  --demo-exit: #07a472;
 
   /* sizes */
   --outline-width: 10px;

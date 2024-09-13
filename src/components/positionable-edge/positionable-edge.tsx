@@ -41,7 +41,6 @@ export function PositionableEdge({
   data,
 }: PositionableEdgeProps) {
   const xyFlowInstance = useReactFlow();
-  const [hovered, setHovered] = useState(false);
 
   const positionHandlers = data.positionHandlers ?? [];
 
@@ -98,12 +97,6 @@ export function PositionableEdge({
       {edgeSegmentsArray.map(({ edgePath }, index) => (
         <ClickableEdge
           id={`${id}_segment_${index}`}
-          onMouseEnter={() => {
-            setHovered(true);
-          }}
-          onMouseLeave={() => {
-            setHovered(false);
-          }}
           onClick={(event) => {
             const position = xyFlowInstance.screenToFlowPosition({
               x: event.clientX,
@@ -125,8 +118,7 @@ export function PositionableEdge({
           }}
           key={`edge${id}_segment${index}`}
           path={edgePath}
-          markerEnd={hovered ? markerEnd : undefined}
-          markerStart={hovered ? markerStart : undefined}
+          markerEnd={markerEnd}
           style={{
             ...style,
             stroke: '#b1b1b7',

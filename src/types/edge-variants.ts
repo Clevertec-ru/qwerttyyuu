@@ -7,9 +7,15 @@ export enum EdgeMarkersVariants {
   BothMarked = 'bothMarked',
 }
 
+export enum EdgeType {
+  SmoothStep = 'smoothstep',
+  Straight = 'straight',
+  Default = 'default',
+}
+
 export enum CustomEdgeVariants {
   Marked = 'customMarked',
-  Positionable = 'positionable',
+  Positionable = 'positionableedge',
 }
 
 export type MarkersVariants = `${EdgeMarkersVariants}`;

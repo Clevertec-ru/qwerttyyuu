@@ -161,4 +161,15 @@ export const initialEdges: Edge[] = [
     },
     ...defaultMarkerStyles,
   },
+  {
+    id: 'el3-14',
+    source: '3',
+    target: '14',
+    type: 'positionableedge',
+    data: {
+      type: 'default',
+      positionHandlers: [],
+    },
+    ...defaultMarkerStyles,
+  },
 ];

@@ -21,6 +21,8 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
 }) => {
   const [showDeleteIcon, setShowDeleteIcon] = useState(false);
 
+  let timer = 0;
+
   const midPoint = getMidPoint(path);
 
   return (
@@ -45,6 +47,16 @@ const ClickableEdge: React.FC<BaseEdgeProps & ClickableEdgeProps> = ({
           onContextMenu={(e) => {
             e.preventDefault();
             setShowDeleteIcon(!showDeleteIcon);
+          }}
+          onTouchStart={(e) => {
+            e.preventDefault();
+            timer = Date.now();
+          }}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            if (Date.now() - timer > 600) {
+              setShowDeleteIcon(!showDeleteIcon);
+            }
           }}
         />
       )}

@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+label {
+  font-weight: var(--main-font-weight);
+  margin-bottom: var(--gap-xs);
+}
+
+.node {
+  width: fit-content;
+  min-width: var(--select-node-width);
+  height: var(--select-node-height);
+  margin-top: var(--gap-m);
+}

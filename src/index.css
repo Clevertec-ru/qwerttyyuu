@@ -37,6 +37,7 @@
   --gap-xs: 8px;
   --gap-s: 10px;
   --gap-m: 16px;
+  --node-margin: 15px;
 }
 
 * {

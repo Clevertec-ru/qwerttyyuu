@@ -12,8 +12,8 @@ export const useAddSameNode = (id: string) => {
       ...currNode,
       id: uniqueId,
       position: {
-        x: currNode?.position ? currNode.position.x + 40 : 40,
-        y: currNode?.position ? currNode.position.y + 20 : 20,
+        x: currNode?.position ? currNode.position.x + 60 : 60,
+        y: currNode?.position ? currNode.position.y + 50 : 50,
       },
     };
     addNodes(newNode);

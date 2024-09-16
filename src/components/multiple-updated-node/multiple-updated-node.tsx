@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, useRef, useState } from 'react';
 import { Handle, NodeProps, Position } from '@xyflow/react';
 
 import { isTextNodeData } from '../../helpers/is-text-node-data';
@@ -7,16 +7,35 @@ import { SwitchedUiComponent } from '../../hoc/switched-ui-component';
 import { DeleteNodeButton } from '../delete-node-button';
 import { getAddDeleteButtonPosition } from '../../helpers/get-add-delete-button-position';
 import { AddNodeButton } from '../add-node-button';
+import { useAdaptSizesNodes } from '../../hooks/use-adapt-sizes-nodes';
+import { useDebounceCallback } from '../../hooks/use-debounce-callback';
+import { getInputSizes } from '../../helpers/get-input-sizes';
 
 import styles from './multiple-updated-node.module.css';
 
 export const MultipleUpdatedNode = ({ data, id }: NodeProps<UpdatedNodeType>) => {
   if (!data.multipleHandles) return null;
 
+  const inputSpyRef = useRef<HTMLSpanElement>(null);
+  const inputLabelRef = useRef<HTMLLabelElement>(null);
+
   const [value, setValue] = useState(() => (isTextNodeData(data) ? data.text : data.number));
+  const { changeNodesSizes } = useAdaptSizesNodes();
+  const debouncedChanger = useDebounceCallback(changeNodesSizes);
 
   const onValueChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setValue(event.target.value);
+
+    const spySizes = { height: inputSpyRef.current?.offsetHeight, width: inputSpyRef.current?.offsetWidth };
+    const originalSizes = inputLabelRef.current?.getBoundingClientRect();
+
+    const { height, width } = getInputSizes(
+      { width: originalSizes?.width, height: originalSizes?.height },
+      spySizes,
+      data.wrapperStyle
+    );
+
+    debouncedChanger({ id, width, height, value: event.target.value });
   };
 
   const {
@@ -59,8 +78,11 @@ export const MultipleUpdatedNode = ({ data, id }: NodeProps<UpdatedNodeType>) =>
             style={{ top: leftHandlesArr.length === 1 ? undefined : index * 10 }}
           />
         ))}
+      <span className={styles.spyInput} ref={inputSpyRef}>
+        {value.replace(/ /g, '\u00A0')}
+      </span>
       <SwitchedUiComponent variant={data.wrapperStyle}>
-        <label className={styles.label}>
+        <label className={styles.label} ref={inputLabelRef}>
           <input
             className={styles.input}
             type={isTextNodeData(data) ? 'text' : 'number'}

@@ -1,8 +1,9 @@
 import { HandleVariants } from './custom-nodes-variants.ts';
+import { NodeUiVariants } from './node-ui-variants.ts';
 
 export type CreateNodeType = {
   nodeText: string;
-  nodeShape: string;
+  nodeShape: NodeUiVariants;
   topDotsType: HandleVariants;
   botDotsType: HandleVariants;
   leftDotsType: HandleVariants;
@@ -11,5 +12,7 @@ export type CreateNodeType = {
   botDotsCount: number;
   leftDotsCount: number;
   rightDotsCount: number;
-
+  height: number;
+  width: number;
+  uniqueId: string;
 }

@@ -1,11 +1,4 @@
-import {
-  EdgeLabelRenderer,
-  EdgeProps,
-  getBezierPath,
-  getSmoothStepPath,
-  getStraightPath,
-  useReactFlow,
-} from '@xyflow/react';
+import { EdgeLabelRenderer, EdgeProps, useReactFlow } from '@xyflow/react';
 
 import ClickableEdge from '../clikable-edge/clikable-edge';
 import './positionable-edge.css';
@@ -17,6 +10,8 @@ import {
   handleTouchMove,
   handleTouchStart,
 } from '../../helpers/positionable-edge-handlers';
+import { getPathFunction } from '../../helpers/get-path';
+import { generateEdgeSegments } from '../../helpers/generate-edge-segments';
 
 type PositionHandler = {
   x: number;
@@ -47,53 +42,22 @@ export function PositionableEdge({
 }: PositionableEdgeProps) {
   const xyFlowInstance = useReactFlow();
   const positionHandlers = data.positionHandlers ?? [];
-  const type = data?.type ?? 'default';
+  const type = data?.type ?? 'smoothstep';
   const edgeSegmentsCount = positionHandlers.length + 1;
-  let edgeSegmentsArray = [];
 
-  let pathFunction;
-  switch (type) {
-    case 'straight':
-      pathFunction = getStraightPath;
-      break;
-    case 'smoothstep':
-      pathFunction = getSmoothStepPath;
-      break;
-    default:
-      pathFunction = getBezierPath;
-  }
+  const pathFunction = getPathFunction(type);
 
-  for (let i = 0; i < edgeSegmentsCount; i++) {
-    let segmentSourceX, segmentSourceY, segmentTargetX, segmentTargetY;
-
-    if (i === 0) {
-      segmentSourceX = sourceX;
-      segmentSourceY = sourceY;
-    } else {
-      const handler = positionHandlers[i - 1];
-      segmentSourceX = handler.x;
-      segmentSourceY = handler.y;
-    }
-
-    if (i === edgeSegmentsCount - 1) {
-      segmentTargetX = targetX;
-      segmentTargetY = targetY;
-    } else {
-      const handler = positionHandlers[i];
-      segmentTargetX = handler.x;
-      segmentTargetY = handler.y;
-    }
-
-    const [edgePath, labelX, labelY] = pathFunction({
-      sourceX: segmentSourceX,
-      sourceY: segmentSourceY,
-      sourcePosition,
-      targetX: segmentTargetX,
-      targetY: segmentTargetY,
-      targetPosition,
-    });
-    edgeSegmentsArray.push({ edgePath, labelX, labelY });
-  }
+  const edgeSegmentsArray = generateEdgeSegments({
+    edgeSegmentsCount,
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+    sourcePosition,
+    targetPosition,
+    positionHandlers,
+    pathFunction,
+  });
 
   const handleDeleteEdge = () => {
     xyFlowInstance.setEdges((edges) => edges.filter((edge) => edge.id !== id));

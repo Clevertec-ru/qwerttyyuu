@@ -1,3 +1,9 @@
+.openBtn {
+  position: fixed;
+  top: 10px;
+  right: 15px;
+}
+
 .modal {
   height: 100vh;
   width: 100vw;

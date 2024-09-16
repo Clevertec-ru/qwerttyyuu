@@ -11,27 +11,33 @@ import { AddNodeButton } from '../add-node-button';
 import { useAdaptSizesNodes } from '../../hooks/use-adapt-sizes-nodes';
 import { useDebounceCallback } from '../../hooks/use-debounce-callback';
 import { getInputSizes } from '../../helpers/get-input-sizes';
+import { NodeUiVariants } from '../../types/node-ui-variants';
 
 import styles from './updated-node.module.css';
 
 export const UpdatedNode = ({ data, sourcePosition, targetPosition, id }: NodeProps<UpdatedNodeType>) => {
   const inputSpyRef = useRef<HTMLSpanElement>(null);
+  const textAreaSpyRef = useRef<HTMLTextAreaElement>(null);
   const inputLabelRef = useRef<HTMLLabelElement>(null);
   const [value, setValue] = useState(() => (isTextNodeData(data) ? data.text : data.number));
   const { changeNodesSizes } = useAdaptSizesNodes();
   const debouncedChanger = useDebounceCallback(changeNodesSizes);
 
-  const onValueChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+  const isRhombus =
+    data.wrapperStyle === NodeUiVariants.Rhombus || data.wrapperStyle === NodeUiVariants.RhombusOutlined;
+  const isTriangle = data.wrapperStyle === NodeUiVariants.Triangle || data.wrapperStyle === NodeUiVariants.TriangleTop;
+
+  const onValueChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
     setValue(event.target.value);
-    const spySizes = { height: inputSpyRef.current?.offsetHeight, width: inputSpyRef.current?.offsetWidth };
+    const spySizesInput = { height: inputSpyRef.current?.offsetHeight, width: inputSpyRef.current?.offsetWidth };
+    const spySizesArea = { height: textAreaSpyRef.current?.offsetHeight, width: textAreaSpyRef.current?.offsetWidth };
     const originalSizes = inputLabelRef.current?.getBoundingClientRect();
 
     const { height, width } = getInputSizes(
       { width: originalSizes?.width, height: originalSizes?.height },
-      spySizes,
+      isRhombus || isTriangle ? spySizesArea : spySizesInput,
       data.wrapperStyle
     );
-
     debouncedChanger({ id, width, height, value: event.target.value });
   };
 
@@ -42,17 +48,33 @@ export const UpdatedNode = ({ data, sourcePosition, targetPosition, id }: NodePr
   return (
     <Fragment key={`flow-node-${id}`}>
       {(!data.handleTypes || targetMode) && <Handle type='target' position={targetPosition ?? Position.Top} />}
-      <span className={styles.spyInput} ref={inputSpyRef}>
-        {value.replace(/ /g, '\u00A0')}
-      </span>
+      {!isRhombus && !isTriangle && (
+        <span className={styles.spyInput} ref={inputSpyRef}>
+          {value.replace(/ /g, '\u00A0')}
+        </span>
+      )}
+      {(isRhombus || isTriangle) && (
+        <textarea
+          className={styles.spyArea}
+          style={{ resize: 'none' }}
+          ref={textAreaSpyRef}
+          value={value.replace(/ /g, '\u00A0')}
+          readOnly={true}
+        />
+      )}
       <SwitchedUiComponent variant={data.wrapperStyle}>
         <label className={styles.label} ref={inputLabelRef}>
-          <input
-            className={styles.input}
-            type={isTextNodeData(data) ? 'text' : 'number'}
-            value={value}
-            onChange={onValueChange}
-          />
+          {!isRhombus && !isTriangle && (
+            <input
+              className={styles.input}
+              type={isTextNodeData(data) ? 'text' : 'number'}
+              value={value}
+              onChange={onValueChange}
+            />
+          )}
+          {(isRhombus || isTriangle) && (
+            <textarea className={styles.textarea} value={value} style={{ resize: 'none' }} onChange={onValueChange} />
+          )}
         </label>
         {data.isHovered && <DeleteNodeButton id={id} {...stylesDeleteBtn} />}
         {data.isHovered && <AddNodeButton id={id} {...stylesAddBtn} />}

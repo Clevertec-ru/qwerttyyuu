@@ -18,8 +18,10 @@ import { nodeTypes } from '../../constants/node-types';
 import { PositionableEdge } from '../positionable-edge/positionable-edge';
 import { defaultMarkerStyles } from '../../constants/default-marker-styles';
 import { CustomEdgeVariants, EdgeType } from '../../types/edge-variants';
+import { CreateNodeModal } from '../create-node-modal/create-node-modal.tsx';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
@@ -105,6 +107,8 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
       >
         {children}
       </ReactFlow>
+      <button onClick={() => setIsModalOpen(!isModalOpen)}>tap</button>
+      <CreateNodeModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen}></CreateNodeModal>
     </div>
   );
 };

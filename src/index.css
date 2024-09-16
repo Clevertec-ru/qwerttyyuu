@@ -29,6 +29,7 @@
   /* gaps */
   --gap-small: 6px;
   --gap-s: 10px;
+  --gap-m: 20px;
 }
 
 * {

@@ -35,12 +35,10 @@ export const UpdatedNode = ({ data, sourcePosition, targetPosition, id }: NodePr
     const spySizesInput = { height: inputSpyRef.current?.offsetHeight, width: inputSpyRef.current?.offsetWidth };
 
     const spySizesArea = {
-      height:
-        textAreaSpyRef.current?.offsetHeight && textAreaSpyRef.current?.scrollHeight
-          ? textAreaSpyRef.current?.offsetHeight + textAreaSpyRef.current?.scrollHeight
-          : textAreaSpyRef.current?.offsetHeight,
+      height: (textAreaSpyRef.current?.offsetHeight || 0) + (textAreaSpyRef.current?.scrollHeight || 0),
       width: textAreaSpyRef.current?.offsetWidth,
     };
+
     const originalSizes = inputLabelRef.current?.getBoundingClientRect();
 
     const { height, width } = getInputSizes({
@@ -65,7 +63,7 @@ export const UpdatedNode = ({ data, sourcePosition, targetPosition, id }: NodePr
         </span>
       )}
 
-      <SwitchedUiComponent variant={data.wrapperStyle} initialHeight={data.initialHeight}>
+      <SwitchedUiComponent variant={data.wrapperStyle}>
         {(isRhombus || isTriangle) && (
           <textarea
             className={styles.spyArea}

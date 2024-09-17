@@ -36,7 +36,6 @@ export type TextNodeData = {
   handleTypes?: HandleTypes;
   multipleHandles?: Partial<MultipleHandlesType>;
   isHovered?: boolean;
-  initialHeight?: string;
 };
 export type NumberNodeData = {
   number: string;
@@ -44,7 +43,6 @@ export type NumberNodeData = {
   handleTypes?: HandleTypes;
   multipleHandles?: Partial<MultipleHandlesType>;
   isHovered?: boolean;
-  initialHeight?: string;
 };
 
 export type ResizableNodeData = {

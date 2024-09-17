@@ -6,6 +6,7 @@ import { SwitchedUiComponent } from '../../hoc/switched-ui-component';
 import { NodeUiVariants, StyleNodeVariants, variantNames } from '../../types/node-ui-variants';
 import { useDragAndDropContext } from '../../context/use-drag-and-drop-context';
 import { CustomNodesVariants, NumberNodeData, TextNodeData } from '../../types/custom-nodes-variants';
+import { initialHeight } from '../../constants/node-options';
 
 import styles from './sidebar.module.css';
 
@@ -19,8 +20,6 @@ export const Sidebar: FC = () => {
   const [currentPosition, setCurrentPosition] = useState<{ left: number; top: number } | null>(null);
   const [draggedNodeType, setDraggedNodeType] = useState<StyleNodeVariants>(NodeUiVariants.Rectangle);
   const { type, data } = useDragAndDropContext();
-  const isRhombus = NodeUiVariants.Rhombus || NodeUiVariants.RhombusOutlined;
-  const isTriangle = NodeUiVariants.Triangle || NodeUiVariants.TriangleTop;
   const onDragStart = (event: DragEvent, nodeType: CustomNodesVariants, data: TextNodeData | NumberNodeData) => {
     setType(nodeType);
     setData(data);
@@ -69,6 +68,7 @@ export const Sidebar: FC = () => {
         type: type ?? CustomNodesVariants.TextUpdated,
         position,
         data: data ?? { isHovered: false, wrapperStyle: NodeUiVariants.Rectangle },
+        height: initialHeight,
       };
 
       addNodes(newNode);
@@ -88,7 +88,6 @@ export const Sidebar: FC = () => {
                 isHovered: false,
                 wrapperStyle: variant,
                 text: 'some text',
-                initialHeight: (isRhombus || isTriangle) && 'var(--select-node-width)',
               })
             }
             onTouchStart={(event) =>
@@ -96,7 +95,6 @@ export const Sidebar: FC = () => {
                 isHovered: false,
                 wrapperStyle: variant,
                 text: 'some text',
-                initialHeight: (isRhombus || isTriangle) && 'var(--select-node-width)',
               })
             }
           >
@@ -105,7 +103,7 @@ export const Sidebar: FC = () => {
                 className={classNames(styles.smallText, {
                   [styles.textTop]: variant === NodeUiVariants.Triangle,
                   [styles.textBottom]: variant === NodeUiVariants.TriangleTop,
-                  [styles.textCenter]: variant === NodeUiVariants.Rhombus,
+                  [styles.textCenter]: variant === NodeUiVariants.Rhombus || variant === NodeUiVariants.RhombusOutlined,
                 })}
               >
                 {variantNames[variant]}

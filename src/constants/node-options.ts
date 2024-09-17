@@ -3,3 +3,5 @@ export const nodeOptions = [
   { value: 'custom', label: 'Node' },
   { value: 'selectorNode', label: 'Selector Node' },
 ];
+
+export const initialHeight = 80;

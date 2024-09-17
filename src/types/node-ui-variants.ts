@@ -16,10 +16,10 @@ export const variantNames: Record<NodeUiVariants, string> = {
   [NodeUiVariants.Rectangle]: 'Rectangle',
   [NodeUiVariants.RectangleOutlined]: 'Outlined Rectangle',
   [NodeUiVariants.Triangle]: 'Triangle',
-  [NodeUiVariants.TriangleTop]: 'Triangle',
+  [NodeUiVariants.TriangleTop]: 'Top Triangle',
   [NodeUiVariants.Ellipse]: 'Ellipse',
   [NodeUiVariants.EllipseOutlined]: 'Outlined Ellipse',
   [NodeUiVariants.EllipseOutlinedDashed]: 'Dashed Ellipse',
   [NodeUiVariants.Rhombus]: 'Rhombus',
-  [NodeUiVariants.RhombusOutlined]: 'Rhombus',
+  [NodeUiVariants.RhombusOutlined]: 'Outlined Rhombus',
 };

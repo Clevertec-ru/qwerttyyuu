@@ -30,6 +30,7 @@ export const CreateNodeModal = ({ setIsModalOpen, isModalOpen }: CreateNodeModal
     setIsModalOpen(false);
     reset();
   };
+
   const handleClose = () => {
     setIsModalOpen(false);
     reset();

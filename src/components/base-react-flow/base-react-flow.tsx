@@ -26,6 +26,7 @@ import { DRAG_EFFECT_NAME } from '../../constants/drag-effect-name';
 import { Sidebar } from '../sidebar';
 import { CustomNodesVariants } from '../../types/custom-nodes-variants';
 import { NodeUiVariants } from '../../types/node-ui-variants';
+import { initialHeight } from '../../constants/node-options';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
@@ -62,6 +63,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         type: type ?? CustomNodesVariants.TextUpdated,
         position,
         data: data ?? { isHovered: false, wrapperStyle: NodeUiVariants.Rectangle },
+        height: initialHeight,
       };
 
       setNodes((nds) => nds.concat(newNode));

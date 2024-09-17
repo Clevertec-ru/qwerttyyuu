@@ -63,4 +63,5 @@
   left: -10000px;
   transform: translate(-10000, -10000);
   position: absolute;
+  text-align: center;
 }

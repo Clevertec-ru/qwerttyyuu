@@ -8,9 +8,14 @@ import { TriangleNode } from '../ui/triangle-node';
 
 type SwitchedUiComponentProps = {
   variant?: StyleNodeVariants;
+  initialHeight?: string;
 };
 
-export const SwitchedUiComponent: FC<PropsWithChildren<SwitchedUiComponentProps>> = ({ variant, children }) => {
+export const SwitchedUiComponent: FC<PropsWithChildren<SwitchedUiComponentProps>> = ({
+  variant,
+  children,
+  initialHeight,
+}) => {
   const Component = {
     [NodeUiVariants.Ellipse]: <EllipseNode>{children}</EllipseNode>,
     [NodeUiVariants.EllipseOutlined]: <EllipseNode outlined={true}>{children}</EllipseNode>,
@@ -21,10 +26,18 @@ export const SwitchedUiComponent: FC<PropsWithChildren<SwitchedUiComponentProps>
     ),
     [NodeUiVariants.Rectangle]: <RectangleNode>{children}</RectangleNode>,
     [NodeUiVariants.RectangleOutlined]: <RectangleNode outlined={true}>{children}</RectangleNode>,
-    [NodeUiVariants.Rhombus]: <RhombusNode>{children}</RhombusNode>,
-    [NodeUiVariants.RhombusOutlined]: <RhombusNode outlined={true}>{children}</RhombusNode>,
-    [NodeUiVariants.Triangle]: <TriangleNode>{children}</TriangleNode>,
-    [NodeUiVariants.TriangleTop]: <TriangleNode orientation='top'>{children}</TriangleNode>,
+    [NodeUiVariants.Rhombus]: <RhombusNode initialHeight={initialHeight}>{children}</RhombusNode>,
+    [NodeUiVariants.RhombusOutlined]: (
+      <RhombusNode initialHeight={initialHeight} outlined={true}>
+        {children}
+      </RhombusNode>
+    ),
+    [NodeUiVariants.Triangle]: <TriangleNode initialHeight={initialHeight}>{children}</TriangleNode>,
+    [NodeUiVariants.TriangleTop]: (
+      <TriangleNode initialHeight={initialHeight} orientation='top'>
+        {children}
+      </TriangleNode>
+    ),
   };
   return variant ? Component[variant] : Component[NodeUiVariants.Rectangle];
 };

@@ -14,9 +14,7 @@ type ChangeNodesSizesArgs = {
 export const useAdaptSizesNodes = () => {
   const { setNodes } = useReactFlow();
 
-  const changeNodesSizes = useCallback((args: ChangeNodesSizesArgs) => {
-    const { id, width, value, height } = args;
-
+  const changeNodesSizes = useCallback(({ id, width, value, height }: ChangeNodesSizesArgs) => {
     setNodes((prevNodes) =>
       prevNodes.map((elem) => {
         const isCurrNode = id === elem.id;
@@ -24,7 +22,7 @@ export const useAdaptSizesNodes = () => {
         const { initialWidth, data, initialHeight } = elem;
 
         const newWidth = (initialWidth && initialWidth > width && initialWidth) || width;
-        const newHeight = (initialHeight && initialHeight > height && initialWidth) || height;
+        const newHeight = (initialHeight && initialHeight > height && initialHeight) || height;
 
         const prevData = data;
         const isTextData = isTextNodeData(data);

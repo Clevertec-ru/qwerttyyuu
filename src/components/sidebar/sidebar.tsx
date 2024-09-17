@@ -16,7 +16,6 @@ export const Sidebar: FC = () => {
 
   const { setType, setData } = useDragAndDropContext();
   const [isDragging, setIsDragging] = useState(false);
-  const [offset, setOffset] = useState<{ x: number; y: number } | null>(null);
   const [currentPosition, setCurrentPosition] = useState<{ left: number; top: number } | null>(null);
   const [draggedNodeType, setDraggedNodeType] = useState<StyleNodeVariants>(NodeUiVariants.Rectangle);
   const { type, data } = useDragAndDropContext();
@@ -28,35 +27,27 @@ export const Sidebar: FC = () => {
     event.dataTransfer.effectAllowed = 'move';
   };
 
-  const onTouchStart = (
-    event: TouchEvent,
-    nodeType: CustomNodesVariants,
-    data: TextNodeData | NumberNodeData,
-    nodeElement: HTMLElement
-  ) => {
+  const onTouchStart = (event: TouchEvent, nodeType: CustomNodesVariants, data: TextNodeData | NumberNodeData) => {
     setType(nodeType);
     setData(data);
 
     setIsDragging(true);
     setDraggedNodeType(data.wrapperStyle);
 
-    const touch = event.touches[0];
-    const rect = nodeElement.getBoundingClientRect();
-    setOffset({
-      x: touch.clientX - rect.left,
-      y: touch.clientY - rect.top,
-    });
-
     event.preventDefault();
   };
 
   const onTouchMove = (event: TouchEvent) => {
-    if (!isDragging || !offset) return;
+    if (!isDragging) return;
 
     const touch = event.touches[0];
+
+    const target = event.target as HTMLElement;
+    const rect = target.getBoundingClientRect();
+
     setCurrentPosition({
-      left: touch.clientX - offset.x,
-      top: touch.clientY - offset.y,
+      left: touch.clientX - rect.width,
+      top: touch.clientY - rect.height,
     });
   };
 
@@ -64,7 +55,6 @@ export const Sidebar: FC = () => {
     if (isDragging) {
       setIsDragging(false);
       setDraggedNodeType(NodeUiVariants.Rectangle);
-      setOffset(null);
       setCurrentPosition(null);
 
       const touch = event.changedTouches[0];
@@ -102,17 +92,12 @@ export const Sidebar: FC = () => {
               })
             }
             onTouchStart={(event) =>
-              onTouchStart(
-                event,
-                CustomNodesVariants.TextUpdated,
-                {
-                  isHovered: false,
-                  wrapperStyle: variant,
-                  text: 'some text',
-                  initialHeight: (isRhombus || isTriangle) && 'var(--select-node-width)',
-                },
-                event.currentTarget
-              )
+              onTouchStart(event, CustomNodesVariants.TextUpdated, {
+                isHovered: false,
+                wrapperStyle: variant,
+                text: 'some text',
+                initialHeight: (isRhombus || isTriangle) && 'var(--select-node-width)',
+              })
             }
           >
             <SwitchedUiComponent variant={variant}>

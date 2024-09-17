@@ -1,5 +1,5 @@
 import '@xyflow/react/dist/style.css';
-import { DragEventHandler, FC, PropsWithChildren, useCallback, useId, useState } from 'react';
+import { DragEventHandler, FC, PropsWithChildren, useCallback, useEffect, useId, useState } from 'react';
 import {
   addEdge,
   applyNodeChanges,
@@ -28,7 +28,6 @@ import { CustomNodesVariants } from '../../types/custom-nodes-variants';
 import { NodeUiVariants } from '../../types/node-ui-variants';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
-  const id = useId();
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const { screenToFlowPosition } = useReactFlow();
@@ -58,10 +57,8 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         y: event.clientY,
       });
 
-      console.log(data, 'DATA');
-
       const newNode = {
-        id,
+        id: `${nodes.length + 1}`,
         type: type ?? CustomNodesVariants.TextUpdated,
         position,
         data: data ?? { isHovered: false, wrapperStyle: NodeUiVariants.Rectangle },
@@ -69,7 +66,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [screenToFlowPosition, type]
+    [screenToFlowPosition, type, data]
   );
 
   const onConnect: OnConnect = useCallback((params) => {

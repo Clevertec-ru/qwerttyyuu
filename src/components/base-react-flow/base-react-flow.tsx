@@ -1,5 +1,5 @@
 import '@xyflow/react/dist/style.css';
-import { FC, PropsWithChildren, useCallback, useState } from 'react';
+import { DragEventHandler, FC, PropsWithChildren, useCallback, useState } from 'react';
 import {
   addEdge,
   applyNodeChanges,
@@ -7,8 +7,10 @@ import {
   NodeMouseHandler,
   OnConnect,
   OnNodesChange,
+  Panel,
   ReactFlow,
   useEdgesState,
+  useReactFlow,
 } from '@xyflow/react';
 
 import { initialEdges } from '../../constants/initial-edges';
@@ -18,16 +20,56 @@ import { nodeTypes } from '../../constants/node-types';
 import { PositionableEdge } from '../positionable-edge/positionable-edge';
 import { defaultMarkerStyles } from '../../constants/default-marker-styles';
 import { CustomEdgeVariants, EdgeType } from '../../types/edge-variants';
+import { CustomPanel } from '../custom-panel';
+import { useDragAndDropContext } from '../../context/use-drag-and-drop-context';
+import { DRAG_EFFECT_NAME } from '../../constants/drag-effect-name';
+import { Sidebar } from '../sidebar';
+import { CustomNodesVariants } from '../../types/custom-nodes-variants';
+import { NodeUiVariants } from '../../types/node-ui-variants';
+import { initialHeight } from '../../constants/node-options';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const { screenToFlowPosition } = useReactFlow();
+  const { type, data } = useDragAndDropContext();
 
   const proOptions = { hideAttribution: true };
 
   const edgeTypes = {
     positionableedge: PositionableEdge,
   };
+
+  const onDragOver: DragEventHandler<HTMLDivElement> = useCallback((event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = DRAG_EFFECT_NAME;
+  }, []);
+
+  const onDrop: DragEventHandler<HTMLDivElement> = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      if (!type) {
+        return;
+      }
+
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+
+      const newNode = {
+        id: `${nodes.length + 1}`,
+        type: type ?? CustomNodesVariants.TextUpdated,
+        position,
+        data: data ?? { isHovered: false, wrapperStyle: NodeUiVariants.Rectangle },
+        height: initialHeight,
+      };
+
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [screenToFlowPosition, type, data]
+  );
 
   const onConnect: OnConnect = useCallback((params) => {
     const newEdge = {
@@ -49,22 +91,6 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
       }),
     [setNodes]
   );
-
-  const onDeleteNode = useCallback((id: string) => {
-    setNodes((nds) => nds.filter((node) => node.id !== id));
-  }, []);
-
-  const nodesWithDelete = nodes.map((node) => {
-    return {
-      ...node,
-      data: {
-        ...node.data,
-        onDelete: () => {
-          onDeleteNode(node.id);
-        },
-      },
-    };
-  });
 
   const onNodeMouseLeave: NodeMouseHandler = useCallback((_, currNode) => {
     setNodes((nodes) =>
@@ -88,8 +114,13 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
+      <CustomPanel position='bottom-right' />
+      <Panel position='top-right'>
+        <Sidebar />
+      </Panel>
+
       <ReactFlow
-        nodes={nodesWithDelete}
+        nodes={nodes}
         edges={edges}
         edgeTypes={edgeTypes}
         // defaultEdgeOptions={defaultEdgeOptions}
@@ -102,6 +133,8 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         onNodeMouseEnter={onNodeMouseEnter}
         onNodeMouseLeave={onNodeMouseLeave}
         proOptions={proOptions}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
       >
         {children}
       </ReactFlow>

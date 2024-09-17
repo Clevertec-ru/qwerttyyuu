@@ -1,0 +1,5 @@
+.openBtn {
+  position: fixed;
+  bottom: var(--gap-m);
+  right: var(--gap-m);
+}

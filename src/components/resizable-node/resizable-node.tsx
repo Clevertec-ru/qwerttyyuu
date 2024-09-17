@@ -35,9 +35,9 @@ export const ResizableNodeSelected: FC<NodeProps<ResizableNodeType>> = ({ data, 
           style={{ width: '100%', height: '100%', resize: 'none' }}
           placeholder='Resizable Node Example'
         />
-        {data.isHovered && <DeleteNodeButton id={id} right='20%' />}
-        {data.isHovered && <AddNodeButton id={id} right='calc(20% + 30px)' />}
       </RectangleNode>
+      {data.isHovered && <DeleteNodeButton id={id} right='20%' />}
+      {data.isHovered && <AddNodeButton id={id} right='calc(20% + 30px)' />}
       <CustomHandle handleProps={{ type: 'source', position: Position.Left }} />
     </>
   );

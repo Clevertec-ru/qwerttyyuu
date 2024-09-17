@@ -9,10 +9,59 @@
 .input {
   font-size: var(--main-font-size);
   font-weight: var(--main-font-weight);
-  display: inline-block;
-  width: 90%;
   text-align: center;
   border: none;
   background-color: transparent;
   color: #fff;
+  overflow: auto !important;
+  width: 100%;
+}
+
+.input:focus,
+.input:target {
+  border-color: transparent;
+  border: none;
+  outline-width: 0;
+  outline-color: rgba(194, 194, 194, 0.5);
+}
+
+.input,
+.spyInput {
+  display: inline-block;
+  padding-left: var(--gap-s);
+  padding-right: var(--gap-s);
+  margin-top: var(--node-margin);
+  margin-bottom: var(--node-margin);
+}
+
+.spyInput {
+  visibility: hidden;
+  top: -10000px;
+  left: -10000px;
+  transform: translate(-10000, -10000);
+  position: absolute;
+}
+
+.textarea {
+  display: inline-block;
+  width: 50%;
+  height: 50%;
+  padding: 0 var(--gap-s);
+  outline: none;
+  border: none;
+  font-size: 16px;
+  background-color: inherit;
+  color: white;
+  text-align: center;
+}
+
+.spyArea {
+  display: inline-block;
+  padding: 0 var(--gap-s);
+  visibility: hidden;
+  top: -10000px;
+  left: -10000px;
+  transform: translate(-10000, -10000);
+  position: absolute;
+  text-align: center;
 }

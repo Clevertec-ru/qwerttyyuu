@@ -2,24 +2,26 @@ aside {
   position: fixed;
   top: var(--gap-l);
   right: var(--gap-l);
-  width: var(--panel-width);
+  width: 100%;
+  max-width: fit-content;
   background-color: var(--white);
   border: var(--default-border);
   border-radius: var(--radius);
   padding: var(--gap-s);
   box-shadow: var(--box-shadow-modal-content);
-  z-index: 5;
+  z-index: 1;
   display: flex;
-  flex-direction: column;
   gap: var(--gap-small);
+  flex-wrap: wrap;
 }
 
 .dndnode {
   padding: var(--gap-xs);
-  background-color: #f9f9f9;
+  background-color: var(--dnd-node-bg);
   border: var(--panel-border);
   border-radius: var(--radius-s);
   cursor: pointer;
+  width: 70px;
 }
 
 .dndnode:hover {
@@ -28,8 +30,8 @@ aside {
 
 .smallText {
   color: var(--white);
-  vertical-align: middle;
   text-align: center;
+  vertical-align: middle;
   padding: var(--gap-xs);
   font-weight: var(--main-font-weight);
   font-size: 0.5rem;
@@ -37,4 +39,12 @@ aside {
   overflow-wrap: break-word;
   word-wrap: break-word;
   white-space: normal;
+}
+
+.textTop {
+  padding-top: 0;
+}
+
+.textBottom {
+  padding-top: var(--gap-l);
 }

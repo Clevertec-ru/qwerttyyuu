@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import classNames from 'classnames';
 
 import { SwitchedUiComponent } from '../../hoc/switched-ui-component';
 import { NodeUiVariants, variantNames } from '../../types/node-ui-variants';
@@ -13,7 +14,14 @@ export const Sidebar: FC = () => {
       {nodeVariants.map((variant) => (
         <div key={variant} className={styles.dndnode} draggable>
           <SwitchedUiComponent variant={variant}>
-            <div className={styles.smallText}>{variantNames[variant]}</div>
+            <div
+              className={classNames(styles.smallText, {
+                [styles.textTop]: variant === NodeUiVariants.Triangle,
+                [styles.textBottom]: variant === NodeUiVariants.TriangleTop,
+              })}
+            >
+              {variantNames[variant]}
+            </div>
           </SwitchedUiComponent>
         </div>
       ))}

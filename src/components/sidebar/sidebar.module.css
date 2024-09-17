@@ -2,7 +2,8 @@ aside {
   position: fixed;
   top: var(--gap-l);
   right: var(--gap-l);
-  width: var(--panel-width);
+  width: fit-content;
+  height: var(--panel-height);
   background-color: var(--white);
   border: var(--default-border);
   border-radius: var(--radius);
@@ -10,7 +11,6 @@ aside {
   box-shadow: var(--box-shadow-modal-content);
   z-index: 5;
   display: flex;
-  flex-direction: column;
   gap: var(--gap-small);
 }
 
@@ -28,8 +28,8 @@ aside {
 
 .smallText {
   color: var(--white);
-  vertical-align: middle;
   text-align: center;
+  vertical-align: middle;
   padding: var(--gap-xs);
   font-weight: var(--main-font-weight);
   font-size: 0.5rem;
@@ -37,4 +37,12 @@ aside {
   overflow-wrap: break-word;
   word-wrap: break-word;
   white-space: normal;
+}
+
+.textTop {
+  padding-top: 0;
+}
+
+.textBottom {
+  padding-top: var(--gap-m);
 }

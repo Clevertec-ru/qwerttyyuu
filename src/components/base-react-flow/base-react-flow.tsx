@@ -91,7 +91,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <CustomPanel position='top-left' />
-
+      <Sidebar />
       <ReactFlow
         nodes={nodesWithDelete}
         edges={edges}
@@ -109,7 +109,6 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
       >
         {children}
       </ReactFlow>
-      <Sidebar />
     </div>
   );
 };

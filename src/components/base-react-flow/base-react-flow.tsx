@@ -23,13 +23,15 @@ import { CustomPanel } from '../custom-panel';
 import { useDragAndDropContext } from '../../context/use-drag-and-drop-context';
 import { DRAG_EFFECT_NAME } from '../../constants/drag-effect-name';
 import { Sidebar } from '../sidebar';
+import { CustomNodesVariants } from '../../types/custom-nodes-variants';
+import { NodeUiVariants } from '../../types/node-ui-variants';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const id = useId();
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const { screenToFlowPosition } = useReactFlow();
-  const { type } = useDragAndDropContext();
+  const { type, data } = useDragAndDropContext();
 
   const proOptions = { hideAttribution: true };
 
@@ -55,11 +57,13 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         y: event.clientY,
       });
 
+      console.log(data, 'DATA');
+
       const newNode = {
         id,
-        type,
+        type: type ?? CustomNodesVariants.TextUpdated,
         position,
-        data: { label: 'new node', isHovered: false, text: 'new node' },
+        data: data ?? { isHovered: false, wrapperStyle: NodeUiVariants.Rectangle },
       };
 
       setNodes((nds) => nds.concat(newNode));

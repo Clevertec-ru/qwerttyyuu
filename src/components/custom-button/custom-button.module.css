@@ -1,0 +1,30 @@
+.customButton {
+  background-color: var(--rhombus-main-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.6em 1.2em;
+  font-size: var(--main-font-size);
+  font-weight: var(--main-font-weight);
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  box-shadow: var(--box-shadow-action-icon);
+}
+
+.customButton:hover {
+  background-color: var(--rhombus-ellipsis-main-color);
+  transform: translateY(-2px);
+}
+
+.customButton:active {
+  background-color: var(--rhombus-ellipsis-main-color);
+  transform: translateY(0);
+}
+
+.customButton:disabled {
+  background-color: var(--demo-map-bg);
+  color: var(--close-icone-color);
+  cursor: not-allowed;
+}

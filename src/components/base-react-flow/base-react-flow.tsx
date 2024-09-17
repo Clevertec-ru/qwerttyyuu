@@ -19,6 +19,7 @@ import { PositionableEdge } from '../positionable-edge/positionable-edge';
 import { defaultMarkerStyles } from '../../constants/default-marker-styles';
 import { CustomEdgeVariants, EdgeType } from '../../types/edge-variants';
 import { CustomPanel } from '../custom-panel';
+import { Sidebar } from '../sidebar';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
@@ -89,7 +90,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
-      <CustomPanel position='top-right' />
+      <CustomPanel position='top-left' />
 
       <ReactFlow
         nodes={nodesWithDelete}
@@ -108,6 +109,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
       >
         {children}
       </ReactFlow>
+      <Sidebar />
     </div>
   );
 };

@@ -1,11 +1,10 @@
-import { DragEvent, FC } from 'react';
+import { FC, DragEvent, TouchEvent } from 'react';
 import classNames from 'classnames';
 
 import { SwitchedUiComponent } from '../../hoc/switched-ui-component';
 import { NodeUiVariants, variantNames } from '../../types/node-ui-variants';
 import { useDragAndDropContext } from '../../context/use-drag-and-drop-context';
 import { CustomNodesVariants, NumberNodeData, TextNodeData } from '../../types/custom-nodes-variants';
-import { DRAG_EFFECT_NAME } from '../../constants/drag-effect-name';
 
 import styles from './sidebar.module.css';
 
@@ -15,10 +14,14 @@ export const Sidebar: FC = () => {
   const { setType, setData } = useDragAndDropContext();
 
   const onDragStart = (event: DragEvent, nodeType: CustomNodesVariants, data: TextNodeData | NumberNodeData) => {
-    console.log(data);
     setType(nodeType);
     setData(data);
-    event.dataTransfer.effectAllowed = DRAG_EFFECT_NAME;
+    event.dataTransfer.effectAllowed = 'move';
+  };
+
+  const onTouchStart = (event: TouchEvent, nodeType: CustomNodesVariants, data: TextNodeData | NumberNodeData) => {
+    setType(nodeType);
+    setData(data);
   };
 
   return (
@@ -30,6 +33,13 @@ export const Sidebar: FC = () => {
           draggable
           onDragStart={(event) =>
             onDragStart(event, CustomNodesVariants.TextUpdated, {
+              isHovered: false,
+              wrapperStyle: variant,
+              text: 'some text',
+            })
+          }
+          onTouchStart={(event) =>
+            onTouchStart(event, CustomNodesVariants.TextUpdated, {
               isHovered: false,
               wrapperStyle: variant,
               text: 'some text',

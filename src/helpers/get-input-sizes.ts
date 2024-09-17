@@ -52,14 +52,13 @@ export const getInputSizes = ({ originalSize, spySizes, uiType }: GetInputSizesT
     }
     case NodeUiVariants.Triangle:
     case NodeUiVariants.TriangleTop: {
-      if (spySizes.width) {
-        result.width =
-          spySizes.width < minSizes.width ? minSizes.width : spySizes.width + paddings[NodeUiVariants.Rhombus];
+      if (spySizes.width && spySizes.height) {
+        const baseWidth = (100 / 60) * spySizes.width;
+        const triangleHeight = Math.sqrt(2) * spySizes.height;
+        result.width = baseWidth < minSizes.width ? minSizes.width : baseWidth;
+        result.height = triangleHeight < minSizes.height ? minSizes.height : triangleHeight;
       }
-      if (spySizes.height) {
-        result.height =
-          spySizes.height < minSizes.height ? minSizes.height : spySizes.height + paddings[NodeUiVariants.Triangle];
-      }
+
       break;
     }
     default:

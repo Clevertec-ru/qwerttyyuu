@@ -69,7 +69,7 @@ export const UpdatedNode = ({ data, sourcePosition, targetPosition, id }: NodePr
         {(isRhombus || isTriangle) && (
           <textarea
             className={styles.spyArea}
-            style={{ resize: 'none', width: '50%' }}
+            style={{ resize: 'none', width: isRhombus ? '50%' : '60%' }}
             ref={textAreaSpyRef}
             value={value}
             readOnly={true}

@@ -33,6 +33,7 @@ export const initialNodes: Node<UpdatedNodeData, string>[] = [
     height: 50,
     width: 150,
     initialWidth: 150,
+    initialHeight: 50,
   },
   {
     id: '3',

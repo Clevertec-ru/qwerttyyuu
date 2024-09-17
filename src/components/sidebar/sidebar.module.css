@@ -1,8 +1,7 @@
 aside {
   position: fixed;
-  top: var(--gap-m);
-  right: var(--gap-m);
-  left: var(--gap-m);
+  top: 0;
+  right: 0;
   width: 100%;
   max-width: fit-content;
   background-color: var(--white);
@@ -17,7 +16,7 @@ aside {
 }
 
 .dndnode {
-  padding: var(--gap-xs);
+  padding: var(--gap-small);
   background-color: var(--dnd-node-bg);
   border: var(--panel-border);
   border-radius: var(--radius-s);
@@ -57,5 +56,4 @@ aside {
 .cloneNode {
   position: absolute;
   opacity: 0.5;
-  pointer-events: 'none';
 }

@@ -36,8 +36,8 @@
 
 .spyInput {
   visibility: hidden;
-  top: -10000;
-  left: -10000;
+  top: -10000px;
+  left: -10000px;
   transform: translate(-10000, -10000);
   position: absolute;
 }
@@ -59,8 +59,8 @@
   display: inline-block;
   padding: 0 var(--gap-s);
   visibility: hidden;
-  top: -10000;
-  left: -10000;
+  top: -10000px;
+  left: -10000px;
   transform: translate(-10000, -10000);
   position: absolute;
 }

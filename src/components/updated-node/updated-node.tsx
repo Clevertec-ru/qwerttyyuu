@@ -65,11 +65,14 @@ export const UpdatedNode = ({ data, sourcePosition, targetPosition, id }: NodePr
         </span>
       )}
 
-      <SwitchedUiComponent variant={data.wrapperStyle}>
+      <SwitchedUiComponent variant={data.wrapperStyle} initialHeight={data.initialHeight}>
         {(isRhombus || isTriangle) && (
           <textarea
             className={styles.spyArea}
-            style={{ resize: 'none', width: isRhombus ? '50%' : '60%' }}
+            style={{
+              resize: 'none',
+              width: isRhombus ? '50%' : '60%',
+            }}
             ref={textAreaSpyRef}
             value={value}
             readOnly={true}

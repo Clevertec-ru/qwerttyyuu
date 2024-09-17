@@ -1,7 +1,8 @@
 aside {
   position: fixed;
-  top: var(--gap-l);
-  right: var(--gap-l);
+  top: var(--gap-m);
+  right: var(--gap-m);
+  left: var(--gap-m);
   width: 100%;
   max-width: fit-content;
   background-color: var(--white);
@@ -47,4 +48,13 @@ aside {
 
 .textBottom {
   padding-top: var(--gap-l);
+}
+
+.textCenter {
+  padding-top: var(--gap-m);
+}
+
+.cloneNode {
+  position: absolute;
+  opacity: 0.5;
 }

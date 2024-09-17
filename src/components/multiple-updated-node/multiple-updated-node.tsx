@@ -29,11 +29,11 @@ export const MultipleUpdatedNode = ({ data, id }: NodeProps<UpdatedNodeType>) =>
     const spySizes = { height: inputSpyRef.current?.offsetHeight, width: inputSpyRef.current?.offsetWidth };
     const originalSizes = inputLabelRef.current?.getBoundingClientRect();
 
-    const { height, width } = getInputSizes(
-      { width: originalSizes?.width, height: originalSizes?.height },
+    const { height, width } = getInputSizes({
+      originalSize: { width: originalSizes?.width, height: originalSizes?.height },
       spySizes,
-      data.wrapperStyle
-    );
+      uiType: data.wrapperStyle,
+    });
 
     debouncedChanger({ id, width, height, value: event.target.value });
   };
@@ -90,9 +90,9 @@ export const MultipleUpdatedNode = ({ data, id }: NodeProps<UpdatedNodeType>) =>
             onChange={onValueChange}
           />
         </label>
-        {data.isHovered && <DeleteNodeButton id={id} {...stylesDeleteBtn} />}
-        {data.isHovered && <AddNodeButton id={id} {...stylesAddBtn} />}
       </SwitchedUiComponent>
+      {data.isHovered && <DeleteNodeButton id={id} {...stylesDeleteBtn} />}
+      {data.isHovered && <AddNodeButton id={id} {...stylesAddBtn} />}
       {Boolean(rightHandles) &&
         rightHandlesArr.map((_, index) => (
           <Handle

@@ -92,22 +92,6 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
     [setNodes]
   );
 
-  const onDeleteNode = useCallback((id: string) => {
-    setNodes((nds) => nds.filter((node) => node.id !== id));
-  }, []);
-
-  const nodesWithDelete = nodes.map((node) => {
-    return {
-      ...node,
-      data: {
-        ...node.data,
-        onDelete: () => {
-          onDeleteNode(node.id);
-        },
-      },
-    };
-  });
-
   const onNodeMouseLeave: NodeMouseHandler = useCallback((_, currNode) => {
     setNodes((nodes) =>
       nodes.map((node) => {
@@ -136,7 +120,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
       </Panel>
 
       <ReactFlow
-        nodes={nodesWithDelete}
+        nodes={nodes}
         edges={edges}
         edgeTypes={edgeTypes}
         // defaultEdgeOptions={defaultEdgeOptions}

@@ -32,9 +32,9 @@ export const CustomTextNode = ({ data, sourcePosition, targetPosition, id }: Nod
             {isTextNodeData(data) ? data.text : data.number}
           </div>
         </div>
-        {isHovered && <DeleteNodeButton id={id} {...stylesDeleteBtn} />}
-        {data.isHovered && <AddNodeButton id={id} {...stylesAddBtn} />}
       </SwitchedUiComponent>
+      {isHovered && <DeleteNodeButton id={id} {...stylesDeleteBtn} />}
+      {isHovered && <AddNodeButton id={id} {...stylesAddBtn} />}
       {(!handleTypes || sourceMode) && <Handle type='source' position={sourcePosition ?? Position.Bottom} />}
     </>
   );

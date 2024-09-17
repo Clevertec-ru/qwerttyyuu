@@ -89,9 +89,9 @@ export const UpdatedNode = ({ data, sourcePosition, targetPosition, id }: NodePr
             <textarea className={styles.textarea} value={value} style={{ resize: 'none' }} onChange={onValueChange} />
           )}
         </label>
-        {data.isHovered && <DeleteNodeButton id={id} {...stylesDeleteBtn} />}
-        {data.isHovered && <AddNodeButton id={id} {...stylesAddBtn} />}
       </SwitchedUiComponent>
+      {data.isHovered && <DeleteNodeButton id={id} {...stylesDeleteBtn} />}
+      {data.isHovered && <AddNodeButton id={id} {...stylesAddBtn} />}
       {(!data.handleTypes || sourceMode) && <Handle type='source' position={sourcePosition ?? Position.Bottom} />}
     </Fragment>
   );

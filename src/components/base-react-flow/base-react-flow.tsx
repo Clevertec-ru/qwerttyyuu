@@ -22,6 +22,7 @@ import { CustomEdgeVariants, EdgeType } from '../../types/edge-variants';
 import { CustomPanel } from '../custom-panel';
 import { useDragAndDropContext } from '../../context/use-drag-and-drop-context';
 import { DRAG_EFFECT_NAME } from '../../constants/drag-effect-name';
+import { Sidebar } from '../sidebar';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const id = useId();
@@ -125,7 +126,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
-      <CustomPanel position='top-right' />
+      <CustomPanel position='top-left' />
 
       <ReactFlow
         nodes={nodesWithDelete}
@@ -146,6 +147,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
       >
         {children}
       </ReactFlow>
+      <Sidebar />
     </div>
   );
 };

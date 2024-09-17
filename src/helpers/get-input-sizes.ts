@@ -4,6 +4,11 @@ type SizesType = {
   width?: number;
   height?: number;
 };
+type GetInputSizesTypeApgs = {
+  originalSize: SizesType;
+  spySizes: SizesType;
+  uiType: StyleNodeVariants;
+};
 
 const paddings = {
   [NodeUiVariants.Rectangle]: 60,
@@ -12,9 +17,9 @@ const paddings = {
   [NodeUiVariants.Triangle]: 10,
 };
 
-const minSizes = { width: 80, height: 40 };
+const minSizes = { width: 100, height: 40 };
 
-export const getInputSizes = (originalSize: SizesType, spySizes: SizesType, uiType: StyleNodeVariants): SizesType => {
+export const getInputSizes = ({ originalSize, spySizes, uiType }: GetInputSizesTypeApgs): SizesType => {
   let result = { width: originalSize.width, height: originalSize.height };
   switch (uiType) {
     case NodeUiVariants.Rectangle:
@@ -23,7 +28,7 @@ export const getInputSizes = (originalSize: SizesType, spySizes: SizesType, uiTy
         result.width =
           spySizes.width < minSizes.width ? minSizes.width : spySizes.width + paddings[NodeUiVariants.Rectangle];
       }
-      return result;
+      break;
     }
     case NodeUiVariants.EllipseOutlined:
     case NodeUiVariants.EllipseOutlinedDashed:
@@ -32,21 +37,21 @@ export const getInputSizes = (originalSize: SizesType, spySizes: SizesType, uiTy
         result.width =
           spySizes.width < minSizes.width ? minSizes.width : spySizes.width + paddings[NodeUiVariants.Ellipse];
       }
-      return result;
+      break;
     }
     case NodeUiVariants.Rhombus:
     case NodeUiVariants.RhombusOutlined: {
-      // console.log('SPY', spySizes, 'ORIGIN', originalSize);
-      if (spySizes.width) {
-        result.width =
-          spySizes.width < minSizes.width ? minSizes.width : spySizes.width + paddings[NodeUiVariants.Rhombus];
+      if (spySizes.width && spySizes.height) {
+        const squareSide = Math.sqrt(spySizes.width * spySizes.height);
+        const widthBlock = Math.round(squareSide * 2) - paddings[NodeUiVariants.Rhombus];
+        result.width = widthBlock < minSizes.width ? minSizes.width : widthBlock + paddings[NodeUiVariants.Rhombus];
         result.height = result.width;
       }
-      return result;
+
+      break;
     }
     case NodeUiVariants.Triangle:
     case NodeUiVariants.TriangleTop: {
-      // console.log('SPY', spySizes, 'ORIGIN', originalSize);
       if (spySizes.width) {
         result.width =
           spySizes.width < minSizes.width ? minSizes.width : spySizes.width + paddings[NodeUiVariants.Rhombus];
@@ -55,9 +60,13 @@ export const getInputSizes = (originalSize: SizesType, spySizes: SizesType, uiTy
         result.height =
           spySizes.height < minSizes.height ? minSizes.height : spySizes.height + paddings[NodeUiVariants.Triangle];
       }
-      return result;
+      break;
     }
     default:
-      return result;
+      break;
   }
+  return {
+    width: result.width ? Math.floor(result.width) : result.width,
+    height: result.height ? Math.floor(result.height) : result.height,
+  };
 };

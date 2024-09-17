@@ -29,15 +29,26 @@ export const UpdatedNode = ({ data, sourcePosition, targetPosition, id }: NodePr
 
   const onValueChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
     setValue(event.target.value);
+    if (!isRhombus && !isTriangle && !inputSpyRef.current) return;
+    if ((isRhombus || isTriangle) && !textAreaSpyRef.current) return;
+
     const spySizesInput = { height: inputSpyRef.current?.offsetHeight, width: inputSpyRef.current?.offsetWidth };
-    const spySizesArea = { height: textAreaSpyRef.current?.offsetHeight, width: textAreaSpyRef.current?.offsetWidth };
+
+    const spySizesArea = {
+      height:
+        textAreaSpyRef.current?.offsetHeight && textAreaSpyRef.current?.scrollHeight
+          ? textAreaSpyRef.current?.offsetHeight + textAreaSpyRef.current?.scrollHeight
+          : textAreaSpyRef.current?.offsetHeight,
+      width: textAreaSpyRef.current?.offsetWidth,
+    };
     const originalSizes = inputLabelRef.current?.getBoundingClientRect();
 
-    const { height, width } = getInputSizes(
-      { width: originalSizes?.width, height: originalSizes?.height },
-      isRhombus || isTriangle ? spySizesArea : spySizesInput,
-      data.wrapperStyle
-    );
+    const { height, width } = getInputSizes({
+      originalSize: { width: originalSizes?.width, height: originalSizes?.height },
+      spySizes: isRhombus || isTriangle ? spySizesArea : spySizesInput,
+      uiType: data.wrapperStyle,
+    });
+
     debouncedChanger({ id, width, height, value: event.target.value });
   };
 
@@ -53,16 +64,17 @@ export const UpdatedNode = ({ data, sourcePosition, targetPosition, id }: NodePr
           {value.replace(/ /g, '\u00A0')}
         </span>
       )}
-      {(isRhombus || isTriangle) && (
-        <textarea
-          className={styles.spyArea}
-          style={{ resize: 'none' }}
-          ref={textAreaSpyRef}
-          value={value.replace(/ /g, '\u00A0')}
-          readOnly={true}
-        />
-      )}
+
       <SwitchedUiComponent variant={data.wrapperStyle}>
+        {(isRhombus || isTriangle) && (
+          <textarea
+            className={styles.spyArea}
+            style={{ resize: 'none', width: '50%' }}
+            ref={textAreaSpyRef}
+            value={value}
+            readOnly={true}
+          />
+        )}
         <label className={styles.label} ref={inputLabelRef}>
           {!isRhombus && !isTriangle && (
             <input

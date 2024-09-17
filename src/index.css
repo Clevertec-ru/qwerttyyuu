@@ -13,9 +13,7 @@
   --demo-exit: #07a472;
   --modal-bg: rgba(0, 0, 0, 0.5);
   --close-icone-color: #888;
-
-  /* sizes */
-  --outline-width: 10px;
+  --dnd-node-bg: #f9f9f9 /* sizes */ --outline-width: 10px;
   --small-outline-width: 4px;
   --demo-height: 600px;
   --demo-width: 800px;
@@ -23,7 +21,6 @@
   --radius-s: 4px;
   --select-node-height: 30px;
   --select-node-width: 100px;
-  --panel-height: 70px;
 
   /* fonts */
   --main-font-size: 18px;

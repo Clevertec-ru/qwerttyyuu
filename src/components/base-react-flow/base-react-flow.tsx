@@ -7,6 +7,7 @@ import {
   NodeMouseHandler,
   OnConnect,
   OnNodesChange,
+  Panel,
   ReactFlow,
   useEdgesState,
 } from '@xyflow/react';
@@ -90,8 +91,11 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
-      <CustomPanel position='top-left' />
-      <Sidebar />
+      <CustomPanel position='bottom-right' />
+      <Panel position='top-right'>
+        <Sidebar />
+      </Panel>
+
       <ReactFlow
         nodes={nodesWithDelete}
         edges={edges}

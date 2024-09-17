@@ -1,5 +1,5 @@
 import '@xyflow/react/dist/style.css';
-import { FC, PropsWithChildren, useCallback, useState } from 'react';
+import { DragEventHandler, FC, PropsWithChildren, useCallback, useId, useState } from 'react';
 import {
   addEdge,
   applyNodeChanges,
@@ -9,6 +9,7 @@ import {
   OnNodesChange,
   ReactFlow,
   useEdgesState,
+  useReactFlow,
 } from '@xyflow/react';
 
 import { initialEdges } from '../../constants/initial-edges';
@@ -19,16 +20,51 @@ import { PositionableEdge } from '../positionable-edge/positionable-edge';
 import { defaultMarkerStyles } from '../../constants/default-marker-styles';
 import { CustomEdgeVariants, EdgeType } from '../../types/edge-variants';
 import { CustomPanel } from '../custom-panel';
+import { useDragAndDropContext } from '../../context/use-drag-and-drop-context';
+import { DRAG_EFFECT_NAME } from '../../constants/drag-effect-name';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
+  const id = useId();
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const { screenToFlowPosition } = useReactFlow();
+  const { type } = useDragAndDropContext();
 
   const proOptions = { hideAttribution: true };
 
   const edgeTypes = {
     positionableedge: PositionableEdge,
   };
+
+  const onDragOver: DragEventHandler<HTMLDivElement> = useCallback((event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = DRAG_EFFECT_NAME;
+  }, []);
+
+  const onDrop: DragEventHandler<HTMLDivElement> = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      if (!type) {
+        return;
+      }
+
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+
+      const newNode = {
+        id,
+        type,
+        position,
+        data: { label: 'new node', isHovered: false, text: 'new node' },
+      };
+
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [screenToFlowPosition, type]
+  );
 
   const onConnect: OnConnect = useCallback((params) => {
     const newEdge = {
@@ -105,6 +141,8 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
         onNodeMouseEnter={onNodeMouseEnter}
         onNodeMouseLeave={onNodeMouseLeave}
         proOptions={proOptions}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
       >
         {children}
       </ReactFlow>

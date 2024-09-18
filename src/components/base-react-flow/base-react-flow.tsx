@@ -2,7 +2,7 @@ import '@xyflow/react/dist/style.css';
 import { DragEventHandler, FC, PropsWithChildren, useCallback, useState } from 'react';
 import {
   addEdge,
-  applyNodeChanges,
+  applyNodeChanges, Edge,
   Node,
   NodeMouseHandler,
   OnConnect,
@@ -29,7 +29,7 @@ import { initialHeight } from '../../constants/node-options';
 
 export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
   const [nodes, setNodes] = useState<Node[]>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const { screenToFlowPosition } = useReactFlow();
   const { type, data } = useDragAndDropContext();
 

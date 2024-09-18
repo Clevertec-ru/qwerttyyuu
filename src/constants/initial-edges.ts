@@ -1,10 +1,9 @@
 import { Edge } from '@xyflow/react';
 import { CSSProperties } from 'react';
 
-import { CustomEdgeVariants } from '../types/edge-variants';
-import { EdgeType } from '../types/edge-variants';
+import { CustomEdgeVariants, EdgeType } from '../types/edge-variants.ts';
 
-import { defaultMarkerStyles } from './default-marker-styles';
+import { defaultMarkerStyles } from './default-marker-styles.ts';
 
 const defaultLabelStyles: CSSProperties = { fontSize: 14, padding: 5 };
 

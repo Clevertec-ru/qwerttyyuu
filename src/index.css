@@ -13,7 +13,10 @@
   --demo-exit: #07a472;
   --modal-bg: rgba(0, 0, 0, 0.5);
   --close-icone-color: #888;
-  --dnd-node-bg: #f9f9f9 /* sizes */ --outline-width: 10px;
+  --dnd-node-bg: #f9f9f9;
+
+  /* sizes */
+  --outline-width: 10px;
   --small-outline-width: 4px;
   --demo-height: 600px;
   --demo-width: 800px;
@@ -67,7 +70,7 @@ body {
 .react-flow__node-selectorNode {
   border: 1px solid #777;
   padding: 10px;
-  background: 'var(--white)';
+  background: var(--white);
   background-color: var(--white);
   border-radius: var(--radius);
 }
@@ -75,4 +78,9 @@ body {
 .react-flow__node-resizableNodeSelected {
   background-color: var(--white);
   border-radius: var(--radius);
+}
+
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
 }

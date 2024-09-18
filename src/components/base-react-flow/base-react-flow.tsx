@@ -58,7 +58,7 @@ export const BaseReactFlow: FC<PropsWithChildren> = ({ children }) => {
       });
 
       const newNode = {
-        id: `${nodes.length + 1}`,
+        id: `${Date.now()}`,
         type: type ?? CustomNodesVariants.TextUpdated,
         position,
         data: data ?? { isHovered: false, wrapperStyle: NodeUiVariants.Rectangle },
